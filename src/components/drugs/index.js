@@ -67,7 +67,7 @@ const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
                   pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
                   paging: true,
                   actionsColumnIndex: -1,
-                  maxBodyHeight: "350px",
+                  maxBodyHeight: "650px",
                 }}
                 isLoading={false}
                 columns={[

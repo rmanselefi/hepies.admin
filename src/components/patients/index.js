@@ -6,12 +6,7 @@ import AddBox from "@material-ui/icons/AddBox";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Edit from "@material-ui/icons/Edit";
 import swal from "sweetalert";
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-} from "reactstrap";
+import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../shared/icons";
 import RemoveRedEyeOutlined from "@material-ui/icons/RemoveRedEyeOutlined";
@@ -20,12 +15,10 @@ const Patients = ({
   history,
   getPatients,
   deletePatient,
-  users: { datas },
-  buttonLabel,
-  className,
+  users: { datas },  
 }) => {
   useEffect(() => {
-    getPatients();
+    getPatients();   
   }, [getPatients]);
 
   const onAddClick = (e) => {
@@ -66,9 +59,9 @@ const Patients = ({
 
   const onViewClick = (e, row) => {
     e.preventDefault();
-    console.log('====================================');
+    console.log("====================================");
     console.log(row);
-    console.log('====================================');
+    console.log("====================================");
     history.push({
       pathname: "/admin/patient/detail",
       state: { detail: row },
@@ -134,7 +127,6 @@ const Patients = ({
           </Card>
         </Col>
       </Row>
-      
     </div>
   );
 };

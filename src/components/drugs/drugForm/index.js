@@ -22,7 +22,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
     category: "",
     strength: "",
     unit: "",
-    description: "",
+    about: "",
   });
   const { state } = location;
 
@@ -34,7 +34,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
         category: state.detail.category,
         strength: state.detail.strength,
         unit: state.detail.unit,
-        description: state.detail.description,
+        description: state.detail.about,
       });
     }
   }, [state]);

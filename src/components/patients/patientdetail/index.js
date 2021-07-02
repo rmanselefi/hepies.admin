@@ -91,6 +91,21 @@ const PatientDetail = ({ location }) => {
               </Row>
               <h1>Investigation</h1>
               <hr/>
+              <Row>
+                <Col md="6">
+                <h3>Microbiology</h3>
+                    <p>{patient.ix.microbiology}</p>
+
+                    <h3>Pathology Index</h3>
+                    <p>{patient.ix.pathologyindex}</p>
+
+                    <h3>Radiology Index</h3>
+                    <p>{patient.ix.radiologyindex}</p>
+
+                    <h3>Others</h3>
+                    <p>{patient.ix.others}</p>
+                </Col>
+              </Row>
             </CardBody>
           </Card>
         </Col>

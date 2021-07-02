@@ -1,13 +1,8 @@
 import React, { useEffect } from "react";
 import { getPrescriptions } from "../../store/actions/prescriptions";
 import { connect } from "react-redux";
-import Edit from '@material-ui/icons/RemoveRedEyeOutlined'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-} from "reactstrap";
+import Edit from "@material-ui/icons/RemoveRedEyeOutlined";
+import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
 import MaterialTable from "material-table";
 import icons from "../shared/icons";
@@ -17,8 +12,6 @@ const Prescriptions = ({ getPrescriptions, users: { datas }, history }) => {
     getPrescriptions();
   }, [getPrescriptions]);
 
-  
-
   const onClick = (e, row) => {
     e.preventDefault();
     history.push({
@@ -27,13 +20,11 @@ const Prescriptions = ({ getPrescriptions, users: { datas }, history }) => {
     });
   };
 
-
   return (
     <div className="content">
       <Row>
         <Col md="12">
           <Card>
-           
             <CardBody>
               <MaterialTable
                 icons={icons}
@@ -50,6 +41,15 @@ const Prescriptions = ({ getPrescriptions, users: { datas }, history }) => {
                 isLoading={false}
                 columns={[
                   { title: "#", render: (rowData) => rowData.tableData.id + 1 },
+                  {
+                    title: "Patient",
+                    render: (patient) => {
+                      return `${patient.patient.name} ${patient.patient.fathername}`;
+                    },
+                  },
+                  { title: "Drug", render: (row) => {
+                    return `${row.drug.name} , ${row.drug.strength}${row.drug.unit}`;
+                  }, },
                   { title: "Code", field: "code" },
                   { title: "Dose", field: "dose" },
                   { title: "Take in", field: "takein" },
@@ -59,13 +59,12 @@ const Prescriptions = ({ getPrescriptions, users: { datas }, history }) => {
                 title="Prescriptions"
                 actions={[
                   {
-                    icon:()=> <Edit/>,
+                    icon: () => <Edit />,
                     tooltip: "View Prescription",
                     onClick: (event, rowData) =>
                       alert("Permission " + rowData.name),
                   },
                 ]}
-                
               />
             </CardBody>
           </Card>
