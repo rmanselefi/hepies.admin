@@ -71,7 +71,7 @@ const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
                 }}
                 isLoading={false}
                 columns={[
-                  { title: "#", render: (rowData) => rowData.tableData.id + 1 },
+                  { title: "#", render: (rowData) => rowData.id + 1 },
                   { title: "Name", field: "name" },
                   { title: "Category", field: "category" },
                   { title: "Strength", field: "strength" },

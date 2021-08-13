@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import { connect } from "react-redux";
 import { useFormik } from "formik";
+import { AvForm, AvField } from "availity-reactstrap-validation";
 
 import { addLookup, updateLookup } from "../../../store/actions/lookup";
 import swal from "sweetalert";
@@ -52,12 +53,9 @@ const LookupForm = ({ addLookup, updateLookup, location }) => {
       value: "",
     },
     validate,
-    onSubmit: async (e,f) => {
+    onSubmit: async (e, f) => {
       const data =
         state != null ? await updateLookup(formData) : addLookup(formData);
-      console.log("====================================");
-      console.log(data);
-      console.log("====================================");
       if (data != null) {
         swal("Saved!", "Your Lookup data has been saved!", "success");
       }
@@ -71,7 +69,7 @@ const LookupForm = ({ addLookup, updateLookup, location }) => {
       [name]: event.target.value,
     });
   };
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data =
       state != null ? await updateLookup(formData) : addLookup(formData);
@@ -91,31 +89,43 @@ const LookupForm = ({ addLookup, updateLookup, location }) => {
               <CardTitle tag="h5">Add Lookup</CardTitle>
             </CardHeader>
             <CardBody>
-              <Form onSubmit={(e)=>formik.handleSubmit(e)}>
+              <AvForm onValidSubmit={(e) => handleSubmit(e)}>
                 <Row>
                   <Col className="pr-1" md="5">
                     <FormGroup>
                       <label>Name</label>
-                      <Input
+                      <AvField
+                        name="name"
                         placeholder="Name"
                         type="text"
                         value={formData.name}
                         onChange={handleChange("name")}
+                        required
                       />
                     </FormGroup>
-                    {formik.errors.name ? <div>{formik.errors.name}</div> : null}
                   </Col>
                   <Col className="px-1" md="3">
                     <FormGroup>
                       <label>Value</label>
-                      <Input
+                      <AvField
+                        name="value"
                         placeholder="Value"
                         type="text"
                         value={formData.value}
                         onChange={handleChange("value")}
+                        required
                       />
+                      {formik.errors.value ? (
+                        <div
+                          style={{
+                            color: "red",
+                            fontSize: "12px",
+                          }}
+                        >
+                          {formik.errors.value}
+                        </div>
+                      ) : null}
                     </FormGroup>
-                    {formik.errors.value ? <div>{formik.errors.value}</div> : null}
                   </Col>
                 </Row>
                 <Row>
@@ -125,7 +135,7 @@ const LookupForm = ({ addLookup, updateLookup, location }) => {
                     </Button>
                   </div>
                 </Row>
-              </Form>
+              </AvForm>
             </CardBody>
           </Card>
         </Col>

@@ -117,50 +117,50 @@ export const addPost = formData => async dispatch => {
     }
 };
 
-export const getPost = id => async dispatch => {
-    try {
-        const res = await axios.get(`http://localhost:5000/post/${id}`);
-        dispatch({
-            type: GET_USER,
-            payload: res.data
-        });
-    } catch (error) {
-        dispatch({
-            type: POST_ERROR,
-            payload: {
-                msg: error.response.statusText,
-                status: error.response.status
+// export const getPost = id => async dispatch => {
+//     try {
+//         const res = await axios.get(`http://localhost:5000/post/${id}`);
+//         dispatch({
+//             type: GET_USER,
+//             payload: res.data
+//         });
+//     } catch (error) {
+//         dispatch({
+//             type: POST_ERROR,
+//             payload: {
+//                 msg: error.response.statusText,
+//                 status: error.response.status
 
-            }
-        })
-    }
-};
+//             }
+//         })
+//     }
+// };
 
-//Add Comment
-export const addComment =( postId , formData ) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    try {
-        const res = await axios.post(`http://localhost:5000/post/comment/${postId}`, formData, config);
-        console.log(res.data)
-        dispatch({
-            type: ADD_COMMENT,
-            payload: res.data
-        });        
-    } catch (error) {
-        dispatch({
-            type: POST_ERROR,
-            payload: {
-                msg: error.response.statusText,
-                status: error.response.status
+// //Add Comment
+// export const addComment =( postId , formData ) => async dispatch => {
+//     const config = {
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     }
+//     try {
+//         const res = await axios.post(`http://localhost:5000/post/comment/${postId}`, formData, config);
+//         console.log(res.data)
+//         dispatch({
+//             type: ADD_COMMENT,
+//             payload: res.data
+//         });        
+//     } catch (error) {
+//         dispatch({
+//             type: POST_ERROR,
+//             payload: {
+//                 msg: error.response.statusText,
+//                 status: error.response.status
 
-            }
-        })
-    }
-};
+//             }
+//         })
+//     }
+// };
 
 //Delete Comment
 // export const deleteComment = (postId, commentId) => async dispatch => {

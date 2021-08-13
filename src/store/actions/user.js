@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA } from "./types";
+import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA, GET_USERS } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 
 export const getUsers = () => async (dispatch) => {
@@ -11,7 +11,7 @@ export const getUsers = () => async (dispatch) => {
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_USERS,
       payload: res.data,
     });
   } catch (error) {

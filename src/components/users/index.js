@@ -20,7 +20,7 @@ const Users = ({
   getUsers,
   deleteUser,
   enableDisableUser,
-  users: { datas },
+  users: { users },
 }) => {
   useEffect(() => {
     getUsers();
@@ -114,7 +114,7 @@ const Users = ({
                     ),
                   },
                 ]}
-                data={datas}
+                data={users}
                 title="Users"
                 actions={[
                   {

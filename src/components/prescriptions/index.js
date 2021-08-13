@@ -44,11 +44,11 @@ const Prescriptions = ({ getPrescriptions, users: { datas }, history }) => {
                   {
                     title: "Patient",
                     render: (patient) => {
-                      return `${patient.patient.name} ${patient.patient.fathername}`;
+                      return `${patient.patient?.name} ${patient.patient?.fathername}`;
                     },
                   },
                   { title: "Drug", render: (row) => {
-                    return `${row.drug.name} , ${row.drug.strength}${row.drug.unit}`;
+                    return `${row.drug?.name} , ${row.drug?.strength}${row.drug?.unit}`;
                   }, },
                   { title: "Code", field: "code" },
                   { title: "Dose", field: "dose" },

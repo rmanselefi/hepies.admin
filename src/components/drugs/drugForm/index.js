@@ -14,6 +14,7 @@ import {
 import { connect } from "react-redux";
 import { addDrug, updateDrug } from "../../../store/actions/drug";
 import swal from "sweetalert";
+import { AvForm, AvField } from 'availity-reactstrap-validation'
 
 const DrugForm = ({ addDrug, updateDrug, location }) => {
   const [formData, setFormData] = useState({
@@ -23,6 +24,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
     strength: "",
     unit: "",
     about: "",
+    route: ""
   });
   const { state } = location;
 
@@ -35,6 +37,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
         strength: state.detail.strength,
         unit: state.detail.unit,
         description: state.detail.about,
+        route:state.detail.route
       });
     }
   }, [state]);
@@ -69,62 +72,84 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
               <CardTitle tag="h5">Add Patient</CardTitle>
             </CardHeader>
             <CardBody>
-              <Form onSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={hadleSubmit}>
                 <Row>
-                  <Col className="pr-1" md="5">
+                  <Col className="pr-1" md="6">
                     <FormGroup>
                       <label>Name</label>
-                      <Input
+                      <AvField
                         placeholder="Name"
                         type="text"
                         value={formData.name}
                         onChange={handleChange("name")}
+                        name="name"
+                        required
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="px-1" md="3">
+                  <Col className="px-1" md="6">
                     <FormGroup>
                       <label>Category</label>
-                      <Input
+                      <AvField
                         placeholder="Category"
                         type="text"
                         value={formData.category}
                         onChange={handleChange("category")}
+                        name="category"
+                        required
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="pr-1" md="5">
+                  <Col className="pr-1" md="6">
                     <FormGroup>
                       <label>Strength</label>
-                      <Input
-                        placeholder="Strenght"
+                      <AvField
+                        placeholder="Strength"
                         type="text"
                         value={formData.strength}
                         onChange={handleChange("strength")}
+                        name="strength"
+                        required
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="px-1" md="3">
+                  <Col className="px-1" md="6">
                     <FormGroup>
                       <label>Unit</label>
-                      <Input
+                      <AvField
                         placeholder="Unit"
                         type="text"
                         value={formData.unit}
                         onChange={handleChange("unit")}
+                        name="unit"
+                        required
                       />
                     </FormGroup>
                   </Col>
                 </Row>
                 <Row>
                   <Col className="px-1" md="6">
+                  <FormGroup>
+                      <label>Route</label>
+                      <AvField
+                        placeholder="Route"
+                        type="text"
+                        value={formData.route}
+                        onChange={handleChange("route")}
+                        name="route"                        
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="px-1" md="6">
                     <FormGroup>
                       <label>Description</label>
-                      <Input
+                      <AvField
                         placeholder="Description"
                         type="textarea"
                         value={formData.description}
                         onChange={handleChange("description")}
+                        name="description"
+                        
                       />
                     </FormGroup>
                   </Col>
@@ -136,7 +161,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
                     </Button>
                   </div>
                 </Row>
-              </Form>
+              </AvForm>
             </CardBody>
           </Card>
         </Col>

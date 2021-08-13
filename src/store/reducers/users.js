@@ -3,7 +3,7 @@ import {
   POST_ERROR,
   UPDATE_DATA,
   DELETE_DATA,
-  GET_USER,
+  GET_USERS,
   ADD_USER,
   ADD_COMMENT,
   REMOVE_COMMENT,
@@ -26,10 +26,10 @@ export default function (state = initialState, action) {
         datas: payload,
         loading: false,
       };
-    case GET_USER:
+    case GET_USERS:
       return {
         ...state,
-        data: payload,
+        users: payload,
         loading: false,
       };
     case ADD_USER:

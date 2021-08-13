@@ -14,6 +14,7 @@ import {
 import { connect } from "react-redux";
 import { addPatient, updatePatient } from "../../../store/actions/patient";
 import { toast } from "react-toastify";
+import { AvForm, AvField } from "availity-reactstrap-validation";
 
 const PatientForm = ({ addPatient, updatePatient, location }) => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,7 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
     sex: "",
     weight: "",
     phone: "",
+    dx: "",
   });
   const { state } = location;
   useEffect(() => {
@@ -38,6 +40,7 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
         sex: state.detail.sex,
         weight: state.detail.weight,
         phone: state.detail.phone,
+        dx: state.detail.dx,
       });
     }
   }, [state]);
@@ -56,9 +59,6 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
       state != null
         ? await updatePatient(formData)
         : await addPatient(formData);
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
     if (data != null) {
       toast.success("Patient is succesfully saved", {
         position: "top-center",
@@ -74,38 +74,44 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
               <CardTitle tag="h5">Add Patient</CardTitle>
             </CardHeader>
             <CardBody>
-              <Form onSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={hadleSubmit}>
                 <Row>
-                  <Col className="pr-1" md="5">
+                  <Col className="pr-1" md="4">
                     <FormGroup>
                       <label>Name</label>
-                      <Input
+                      <AvField
+                        name="name"
                         placeholder="Name"
                         type="text"
                         value={formData.name}
                         onChange={handleChange("name")}
+                        required
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="px-1" md="3">
+                  <Col className="px-1" md="4">
                     <FormGroup>
                       <label>Father Name</label>
-                      <Input
+                      <AvField
+                        name="fathername"
                         placeholder="Father Name"
                         type="text"
                         value={formData.fathername}
                         onChange={handleChange("fathername")}
+                        required
                       />
                     </FormGroup>
                   </Col>
                   <Col className="pl-1" md="4">
                     <FormGroup>
                       <label>Grand Father Name</label>
-                      <Input
+                      <AvField
+                        name="grandfathername"
                         placeholder="Grand Father Name"
                         type="text"
                         value={formData.grandfathername}
                         onChange={handleChange("grandfathername")}
+                        required
                       />
                     </FormGroup>
                   </Col>
@@ -114,7 +120,8 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                   <Col className="pr-1" md="6">
                     <FormGroup>
                       <label>Phone</label>
-                      <Input
+                      <AvField
+                        name="phone"
                         placeholder="Phone"
                         type="text"
                         value={formData.phone}
@@ -125,7 +132,8 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                   <Col className="pl-1" md="6">
                     <FormGroup>
                       <label>Age</label>
-                      <Input
+                      <AvField
+                        name="age"
                         placeholder="Age"
                         type="number"
                         value={formData.age}
@@ -135,19 +143,33 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col md="12">
+                  <Col md="6">
                     <FormGroup>
                       <label>Sex</label>
-                      <Input
+                      <AvField
                         type="select"
                         name="select"
                         id="exampleSelect"
                         value={formData.sex}
                         onChange={handleChange("sex")}
+                        required
                       >
                         <option>Male</option>
                         <option>Female</option>
-                      </Input>
+                      </AvField>
+                    </FormGroup>
+                  </Col>
+                  <Col md="6">
+                    <FormGroup>
+                      <label>Dx</label>
+                      <AvField
+                        name="dx"
+                        placeholder="Dx"
+                        type="text"
+                        value={formData.dx}
+                        onChange={handleChange("dx")}
+                        required
+                      />
                     </FormGroup>
                   </Col>
                 </Row>
@@ -155,11 +177,13 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                   <Col className="pr-1" md="4">
                     <FormGroup>
                       <label>Weight</label>
-                      <Input
+                      <AvField
+                      name="weight"
                         placeholder="Weight"
                         type="text"
                         value={formData.weight}
                         onChange={handleChange("weight")}
+                        required
                       />
                     </FormGroup>
                   </Col>
@@ -171,7 +195,7 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                     </Button>
                   </div>
                 </Row>
-              </Form>
+              </AvForm>
             </CardBody>
           </Card>
         </Col>

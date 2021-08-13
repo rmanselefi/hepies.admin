@@ -14,6 +14,7 @@ import {
 import { connect } from "react-redux";
 import { addUser, updateUser } from "../../../store/actions/user";
 import { getRoles } from "../../../store/actions/roles";
+import { AvForm, AvField } from "availity-reactstrap-validation";
 
 import swal from "sweetalert";
 
@@ -113,38 +114,44 @@ const UserForm = ({
               <CardTitle tag="h5">{title}</CardTitle>
             </CardHeader>
             <CardBody>
-              <Form onSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={hadleSubmit}>
                 <Row>
                   <Col className="pr-1" md="4">
                     <FormGroup>
                       <label>Name</label>
-                      <Input
+                      <AvField
+                        name="name"
                         placeholder="Name"
                         type="text"
                         value={formData.name}
                         onChange={handleChange("name")}
+                        required
                       />
                     </FormGroup>
                   </Col>
                   <Col className="px-1" md="4">
                     <FormGroup>
                       <label>Father Name</label>
-                      <Input
+                      <AvField
+                        name="fathername"
                         placeholder="Father Name"
                         type="text"
                         value={formData.fathername}
                         onChange={handleChange("fathername")}
+                        required
                       />
                     </FormGroup>
                   </Col>
                   <Col className="pl-1" md="4">
                     <FormGroup>
                       <label>Grand Father Name</label>
-                      <Input
+                      <AvField
+                        name="grandfathername"
                         placeholder="Grand Father Name"
                         type="text"
                         value={formData.grandfathername}
                         onChange={handleChange("grandfathername")}
+                        required
                       />
                     </FormGroup>
                   </Col>
@@ -153,33 +160,39 @@ const UserForm = ({
                   <Col className="pr-1" md="4">
                     <FormGroup>
                       <label>Phone</label>
-                      <Input
+                      <AvField
+                        name="phone"
                         placeholder="Phone"
                         type="text"
                         value={formData.phone}
                         onChange={handleChange("phone")}
+                        required
                       />
                     </FormGroup>
                   </Col>
                   <Col className="pl-1" md="4">
                     <FormGroup>
                       <label>Profession</label>
-                      <Input
+                      <AvField
+                        name="proffesion"
                         placeholder="Profession"
                         type="text"
                         value={formData.proffesion}
                         onChange={handleChange("proffesion")}
+                        required
                       />
                     </FormGroup>
                   </Col>
                   <Col className="pr-1" md="4">
                     <FormGroup>
                       <label>Email</label>
-                      <Input
+                      <AvField
+                        name="email"
                         placeholder="Email"
                         type="email"
                         value={formData.email}
                         onChange={handleChange("email")}
+                        required
                       />
                     </FormGroup>
                   </Col>
@@ -236,29 +249,34 @@ const UserForm = ({
                   <Col className="pr-1" md="6">
                     <FormGroup>
                       <label>Username</label>
-                      <Input
+                      <AvField
+                        name="username"
                         placeholder="Username"
                         type="text"
                         value={formData.user?.username}
                         onChange={handleChange("username")}
+                        required
                       />
                     </FormGroup>
                   </Col>
                   <Col className="pl-1" md="6">
                     <FormGroup>
                       <label>Password</label>
-                      <Input
+                      <AvField
+                        name="password"
                         placeholder="Password"
                         type="password"
                         value={formData.user?.password}
                         onChange={handleChange("password")}
+                        required={state !== null?false:true}
                       />
                     </FormGroup>
                   </Col>
                   <Col md="6">
                     <FormGroup>
                       <label>Role</label>
-                      <Input
+                      <AvField
+                        required
                         type="select"
                         name="select"
                         id="exampleSelect"
@@ -272,7 +290,7 @@ const UserForm = ({
                             </option>
                           );
                         })}
-                      </Input>
+                      </AvField>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -284,7 +302,7 @@ const UserForm = ({
                     </Button>
                   </div>
                 </Row>
-              </Form>
+              </AvForm>
             </CardBody>
           </Card>
         </Col>

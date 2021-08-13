@@ -10,7 +10,7 @@ export const LOGOUT = 'LOGOUT';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 
 export const GET_DATAS = 'GET_DATAS';
-export const GET_USER = 'GET_USER';
+export const GET_USERS = 'GET_USERS';
 export const POST_ERROR = 'POST_ERROR';
 export const UPDATE_DATA = 'UPDATE_DATA';
 export const DELETE_DATA = 'DELETE_DATA';
