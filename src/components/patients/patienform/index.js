@@ -117,7 +117,7 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col className="pr-1" md="6">
+                  <Col className="pr-1" md="4">
                     <FormGroup>
                       <label>Phone</label>
                       <AvField
@@ -143,7 +143,7 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col md="6">
+                  <Col md="4">
                     <FormGroup>
                       <label>Sex</label>
                       <AvField
@@ -159,26 +159,11 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                       </AvField>
                     </FormGroup>
                   </Col>
-                  <Col md="6">
-                    <FormGroup>
-                      <label>Dx</label>
-                      <AvField
-                        name="dx"
-                        placeholder="Dx"
-                        type="text"
-                        value={formData.dx}
-                        onChange={handleChange("dx")}
-                        required
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="pr-1" md="4">
+                  <Col md="4">
                     <FormGroup>
                       <label>Weight</label>
                       <AvField
-                      name="weight"
+                        name="weight"
                         placeholder="Weight"
                         type="text"
                         value={formData.weight}
@@ -189,11 +174,11 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
                   </Col>
                 </Row>
                 <Row>
-                  <div className="update ml-auto mr-auto">
+                  <Col className="pr-1" md="4">
                     <Button className="btn-round" color="primary" type="submit">
                       Register Patient
                     </Button>
-                  </div>
+                  </Col>
                 </Row>
               </AvForm>
             </CardBody>

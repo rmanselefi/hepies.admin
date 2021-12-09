@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { getConsults, deleteConsult } from "../../store/actions/consults";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
@@ -10,27 +9,27 @@ import swal from "sweetalert";
 import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../shared/icons";
-import moment from "moment";
+import { getVouchers, deleteVoucher } from "../../store/actions/voucher";
 
-const Consults = ({
+const Vouchers = ({
   history,
-  getConsults,
-  deleteConsult,
+  getVouchers,
+  deleteVoucher,
   users: { datas },
 }) => {
   useEffect(() => {
-    getConsults();
-  }, [getConsults]);
+    getVouchers();
+  }, [getVouchers]);
 
   const onAddClick = (e) => {
     e.preventDefault();
-    history.push("/admin/consult/post");
+    history.push("/admin/voucher/add");
   };
 
   const onEditClick = (e, row) => {
     e.preventDefault();
     history.push({
-      pathname: "/admin/consult/edit",
+      pathname: "/admin/voucher/edit",
       state: { detail: row },
     });
   };
@@ -50,9 +49,10 @@ const Consults = ({
     });
 
     if (willDelete) {
-      const res = await deleteConsult(row.id);
+      console.log(row);
+      const res = await deleteVoucher(row.id);
       if (res != null) {
-        swal("Deleted!", "Your Drug data has been deleted!", "success");
+        swal("Deleted!", "Your Point data has been deleted!", "success");
       }
     }
   };
@@ -73,65 +73,31 @@ const Consults = ({
                   paging: true,
                   actionsColumnIndex: -1,
                   maxBodyHeight: "350px",
-                  headerStyle: {
-                    width: "50px",
-                  },
-                  cellStyle: {
-                    fontSize: "13px",
-                  },
                 }}
                 isLoading={false}
                 columns={[
-                  {
-                    title: "#",
-                    render: (rowData) => rowData.tableData.id + 1,
-                    headerStyle: {
-                      width: "10px",
-                    },
-                  },
-                  { title: "Topic", field: "topic" },
-                  {
-                    title: "Image",
-                    render: (row) => {
-                      return (
-                        <img
-                          src={row.image}
-                          alt={"consult"}
-                          width="50"
-                          height="50"
-                        />
-                      );
-                    },
-                  },
-                  {
-                    title: "Date",
-                    render: (patient) => {
-                      return moment(patient.createdAt).format("MM/DD/YYYY");
-                    },
-                    customFilterAndSearch: (term, patient) =>
-                      moment(patient.createdAt)
-                        .format("MM/DD/YYYY")
-                        .toLowerCase()
-                        .includes(term.toLowerCase()),
-                  },
+                  { title: "#", render: (rowData) => rowData.tableData.id + 1 },
+                  { title: "Code", field: "code" },
+                  { title: "Amount", field: "amount" },
+                  { title: "Status", field: "status" },
                 ]}
                 data={datas}
-                title="Consult datas"
+                title="Vouchers"
                 actions={[
                   {
                     icon: () => <AddBox />,
-                    tooltip: "Send Consult",
+                    tooltip: "Add Voucher",
                     isFreeAction: true,
                     onClick: (event) => onAddClick(event),
                   },
                   {
                     icon: () => <Edit />,
-                    tooltip: "Edit Consult",
+                    tooltip: "Edit Voucher",
                     onClick: (event, rowData) => onEditClick(event, rowData),
                   },
                   {
                     icon: () => <DeleteOutline />,
-                    tooltip: "Delete Consult",
+                    tooltip: "Delete Voucher",
                     onClick: (event, rowData) => onDeleteClick(event, rowData),
                   },
                 ]}
@@ -144,13 +110,13 @@ const Consults = ({
   );
 };
 
-Consults.propTypes = {};
+Vouchers.propTypes = {};
 
 const mapStateToProps = (state) => ({
   users: state.users,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {
-  getConsults,
-  deleteConsult,
-})(withRouter(Consults));
+  getVouchers,
+  deleteVoucher,
+})(withRouter(Vouchers));

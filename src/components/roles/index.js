@@ -43,7 +43,6 @@ const Roles = ({ getRoles, history, deleteRole, users: { datas } }) => {
     });
 
     if (willDelete) {
-      console.log(row);
       const res = await deleteRole(row.id);
       if (res != null) {
         swal("Deleted!", "Your role data has been deleted!", "success");

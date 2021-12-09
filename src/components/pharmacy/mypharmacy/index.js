@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { getDrugs, deleteDrug } from "../../store/actions/drug";
+import {
+  getPharmacists,
+  getMyPharmacyById,
+  deleteDrug,
+} from "../../../store/actions/pharmacy";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
@@ -7,14 +11,24 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Edit from "@material-ui/icons/Edit";
 import swal from "sweetalert";
 
-import { Card, CardBody, Row, Col } from "reactstrap";
+import { Card, CardBody, Row, Col, NavLink, Button } from "reactstrap";
 import { withRouter } from "react-router";
-import icons from "../shared/icons";
+import icons from "../../shared/icons";
 
-const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
+const MyPharmacy = ({
+  history,
+  getPharmacists,
+  getMyPharmacyById,
+  deleteDrug,
+  location,
+  users: { datas },
+}) => {
+  const { state } = location;
+ 
+  const id = state.detail.id;
   useEffect(() => {
-    getDrugs();
-  }, [getDrugs]);
+    getMyPharmacyById(id);
+  }, [getMyPharmacyById, id]);
 
   const onAddClick = (e) => {
     e.preventDefault();
@@ -46,7 +60,7 @@ const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
     if (willDelete) {
       const res = await deleteDrug(row.id);
       if (res != null) {
-        swal("Deleted!", "Your Drug data has been deleted!", "success");
+        swal("Deleted!", "Your Pharmacy data has been deleted!", "success");
       }
     }
   };
@@ -67,35 +81,36 @@ const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
                   paging: true,
                   actionsColumnIndex: -1,
                   maxBodyHeight: "650px",
+                  cellStyle: {
+                    fontSize: "13px",
+                  },
                 }}
                 isLoading={false}
                 columns={[
                   { title: "#", render: (rowData) => rowData.id + 1 },
-                  { title: "Name", field: "name" },
-                  { title: "Category", field: "category" },
-                  { title: "Strength", field: "strength" },
-                  { title: "Unit", field: "unit" },
+                  { title: "Drug Name", field: "drug_name" },
+                  { title: "Price", field: "price" },
                 ]}
                 data={datas}
-                title="Drug datas"
-                actions={[
-                  {
-                    icon: () => <AddBox />,
-                    tooltip: "Add Drug",
-                    isFreeAction: true,
-                    onClick: (event) => onAddClick(event),
-                  },
-                  {
-                    icon: () => <Edit />,
-                    tooltip: "Edit Drug",
-                    onClick: (event, rowData) => onEditClick(event, rowData),
-                  },
-                  {
-                    icon: () => <DeleteOutline />,
-                    tooltip: "Delete Drug",
-                    onClick: (event, rowData) => onDeleteClick(event, rowData),
-                  },
-                ]}
+                title={"My Pharmacy for " + state.detail.name}
+                // actions={[
+                //   {
+                //     icon: () => <AddBox />,
+                //     tooltip: "Add Drug",
+                //     isFreeAction: true,
+                //     onClick: (event) => onAddClick(event),
+                //   },
+                //   {
+                //     icon: () => <Edit />,
+                //     tooltip: "Edit Drug",
+                //     onClick: (event, rowData) => onEditClick(event, rowData),
+                //   },
+                //   {
+                //     icon: () => <DeleteOutline />,
+                //     tooltip: "Delete Drug",
+                //     onClick: (event, rowData) => onDeleteClick(event, rowData),
+                //   },
+                // ]}
               />
             </CardBody>
           </Card>
@@ -105,13 +120,13 @@ const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
   );
 };
 
-Drug.propTypes = {};
+MyPharmacy.propTypes = {};
 
 const mapStateToProps = (state) => ({
   users: state.users,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {
-  getDrugs,
+  getMyPharmacyById,
   deleteDrug,
-})(withRouter(Drug));
+})(withRouter(MyPharmacy));

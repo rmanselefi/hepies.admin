@@ -11,6 +11,7 @@ import {
 } from './types';
 import setAuthToken from '../../components/utils/setAuthToken'
 
+import { apiUrl } from './constant'
 //Load User
  
 export const loadUser = () => async dispatch => {
@@ -19,7 +20,7 @@ export const loadUser = () => async dispatch => {
         setAuthToken(localStorage.getItem('token'));
     }
     try {
-        const res = await axios.get('http://localhost:3500/api/auth/me');
+        const res = await axios.post(apiUrl+'/auth/me');
 
         dispatch({
             type: USER_LOADED,
@@ -47,7 +48,7 @@ export const register = ({ name, email, password }) => async dispatch => {
         password
     }) 
     try {
-        const res = await axios.post('http://localhost:5000/users/signup', body, config);
+        const res = await axios.post(apiUrl+'/users/signup', body, config);
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
@@ -75,7 +76,7 @@ export const login = (username, password, history ) => async dispatch => {
         password
     });
       try {
-        const res = await axios.post('http://localhost:3500/api/auth/login', body, config);
+        const res = await axios.post(apiUrl+'/auth/admin-login', body, config);
                
         dispatch({
             type: LOGIN_SUCCESS,

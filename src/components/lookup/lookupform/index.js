@@ -73,9 +73,7 @@ const LookupForm = ({ addLookup, updateLookup, location }) => {
     e.preventDefault();
     const data =
       state != null ? await updateLookup(formData) : addLookup(formData);
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
+  
     if (data != null) {
       swal("Saved!", "Your Lookup data has been saved!", "success");
     }

@@ -17,6 +17,12 @@ import userform from "components/users/userform";
 import roles from "components/roles";
 import roleForm from "components/roles/roleForm";
 import PatientDetail from "components/patients/patientdetail";
+import guidelines from "components/guidelines";
+import guidelinesForm from "components/guidelines/guidelinesForm";
+import pharmacy from "components/pharmacy";
+import voucher from "components/voucher";
+import voucherform from "components/voucher/voucherform";
+import mypharmacy from "components/pharmacy/mypharmacy";
 
 var routes = [
   {
@@ -36,13 +42,13 @@ var routes = [
     show: true,
   },
   {
-    path: "/user/register",   
+    path: "/user/register",
     component: userform,
     layout: "/admin",
     show: false,
   },
   {
-    path: "/user/edit",   
+    path: "/user/edit",
     component: userform,
     layout: "/admin",
     show: false,
@@ -82,6 +88,35 @@ var routes = [
     layout: "/admin",
     show: false,
   },
+
+  {
+    path: "/pharmacies",
+    name: "Pharmacies",
+    icon: "nc-icon nc-bell-55",
+    component: pharmacy,
+    layout: "/admin",
+    show: true,
+  },
+  {
+    path: "/pharmacy/add",
+    component: PatientForm,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/pharmacy/mypharmacy",
+    component: mypharmacy,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/pharmacy/edit",
+    component: PatientForm,
+    layout: "/admin",
+    show: false,
+  },
   {
     path: "/patient/detail",
     component: PatientDetail,
@@ -108,6 +143,50 @@ var routes = [
     layout: "/admin",
     show: false,
   },
+
+  {
+    path: "/guidelines",
+    name: "Guidelines",
+    icon: "nc-icon nc-bell-55",
+    component: guidelines,
+    layout: "/admin",
+    show: true,
+  },
+  {
+    path: "/guideline/add",
+    component: guidelinesForm,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/guideline/edit",
+    component: guidelinesForm,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/vouchers",
+    name: "Vouchers",
+    icon: "nc-icon nc-single-02",
+    component: voucher,
+    layout: "/admin",
+    show: true,
+  },
+  {
+    path: "/voucher/add",
+    component: voucherform,
+    layout: "/admin",
+    show: false,
+  },
+  {
+    path: "/voucher/edit",
+    component: voucherform,
+    layout: "/admin",
+    show: false,
+  },
+
   {
     path: "/consults",
     name: "Consults",
@@ -117,13 +196,13 @@ var routes = [
     show: true,
   },
   {
-    path: "/consult/post",    
+    path: "/consult/post",
     component: consultForm,
     layout: "/admin",
     show: false,
   },
   {
-    path: "/consult/edit",    
+    path: "/consult/edit",
     component: consultForm,
     layout: "/admin",
     show: false,

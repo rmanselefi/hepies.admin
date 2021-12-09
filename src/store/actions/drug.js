@@ -1,13 +1,15 @@
 import axios from "axios";
 import { GET_DATAS, POST_ERROR,ADD_USER, DELETE_DATA } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
+import { apiUrl } from "./constant";
+
 
 export const getDrugs = () => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
-    const res = await axios.get("http://localhost:3500/api/drugs");
+    const res = await axios.get(apiUrl+"/drugs");
     console.log(res.data);
 
     dispatch({
@@ -37,7 +39,7 @@ export const addDrug = formData => async dispatch => {
       }
   }
   try {
-      const res = await axios.post('http://localhost:3500/api/drugs', formData, config);
+      const res = await axios.post(apiUrl+'/drugs', formData, config);
       if(res.data!=null){
         return res.data
       }
@@ -70,7 +72,7 @@ export const updateDrug = (formData) => async (dispatch) => {
   };
   try {
     const res = await axios.put(
-      "http://localhost:3500/api/drugs/" + formData.id,
+      apiUrl+"/drugs/" + formData.id,
       formData,
       config
     );
@@ -96,7 +98,7 @@ export const updateDrug = (formData) => async (dispatch) => {
 //DELETE PATIENT
 export const deleteDrug = id => async dispatch => {
     try {
-         const res=await axios.delete(`http://localhost:3500/api/drugs/${id}`);
+         const res=await axios.delete(apiUrl+`/drugs/${id}`);
          console.log('====================================');
          console.log(res.data);
          console.log('====================================');

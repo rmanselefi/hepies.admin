@@ -43,7 +43,6 @@ const Lookup = ({ history, getLookups, deleteLookup, users: { datas } }) => {
     });
 
     if (willDelete) {
-      console.log(row);
       const res = await deleteLookup(row.id);
       if (res != null) {
         swal("Deleted!", "Your Lookup data has been deleted!", "success");

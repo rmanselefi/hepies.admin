@@ -15,10 +15,10 @@ import { connect } from "react-redux";
 import { addConsult, updateConsult } from "../../../store/actions/consults";
 import swal from "sweetalert";
 
-const ConsultForm = ({ addConsult, location }) => {
+const ConsultForm = ({ addConsult, updateConsult, location }) => {
   const [formData, setFormData] = useState({
     topic: "",
-    image: "",
+    image: null,
   });
 
   const { state } = location;
@@ -32,6 +32,8 @@ const ConsultForm = ({ addConsult, location }) => {
     }
   }, [state]);
 
+  const [url, setUrl] = useState(true);
+
   const handleChange = (name) => (event) => {
     event.preventDefault();
     setFormData({
@@ -43,11 +45,8 @@ const ConsultForm = ({ addConsult, location }) => {
     e.preventDefault();
     const data =
       state != null
-        ? await addConsult(formData)
-        : await updateConsult(formData);
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
+        ? await updateConsult(formData, url)
+        : await addConsult(formData);
     if (data != null) {
       swal(
         "Saved!",
@@ -56,6 +55,15 @@ const ConsultForm = ({ addConsult, location }) => {
       );
     }
   };
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      setFormData({ ...formData, image: image });
+      setUrl(false);
+    }
+  };
+
   return (
     <div className="content">
       <Row>
@@ -79,23 +87,33 @@ const ConsultForm = ({ addConsult, location }) => {
                     </FormGroup>
                   </Col>
                   <Col className="px-1" md="3">
-                    <FormGroup>
-                      <label>Image</label>
-                      <Input
-                        placeholder="Image"
-                        type="text"
-                        value={formData.image}
-                        onChange={handleChange("image")}
-                      />
-                    </FormGroup>
+                    <label>Image</label>
+                    <input
+                      accept="image/*"
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={handleImageChange}
+                    />
                   </Col>
+                  {formData.image !== "" && formData.image != null ? (
+                    <img
+                      width="300"
+                      alt="consult img"
+                      src={
+                        state != null && url
+                          ? formData.image
+                          : URL.createObjectURL(formData.image)
+                      }
+                    />
+                  ) : null}
                 </Row>
                 <Row>
-                  <div className="update ml-auto mr-auto">
+                  <Col className="px-1" md="3">
                     <Button className="btn-round" color="primary" type="submit">
                       Save{" "}
                     </Button>
-                  </div>
+                  </Col>
                 </Row>
               </Form>
             </CardBody>
@@ -108,6 +126,4 @@ const ConsultForm = ({ addConsult, location }) => {
 
 ConsultForm.propTypes = {};
 
-export default connect(null, {
-  addConsult,
-})(ConsultForm);
+export default connect(null, { updateConsult, addConsult })(ConsultForm);

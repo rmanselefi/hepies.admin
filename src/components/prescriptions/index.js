@@ -1,84 +1,162 @@
-import React, { useEffect } from "react";
-import { getPrescriptions } from "../../store/actions/prescriptions";
-import { connect } from "react-redux";
-import Edit from "@material-ui/icons/RemoveRedEyeOutlined";
-import { Card, CardBody, Row, Col } from "reactstrap";
-import { withRouter } from "react-router";
-import MaterialTable from "material-table";
-import icons from "../shared/icons";
+// import * as React from "react";
+// import Box from "@material-ui/core/Box";
+// import Tab from "@material-ui/core/Tab";
+// import TabContext from "@material-ui/lab/TabContext";
+// import TabList from "@material-ui/lab/TabList";
+// import TabPanel from "@material-ui/lab/TabPanel";
+// import GeneralPrescriptions from "./types/general";
+// import InstrumentPrescriptions from "./types/instrument";
+// import NarcoticPrescriptions from "./types/narcotic";
+// import PsychotropicPrescriptions from "./types/psychotropic";
 
-const Prescriptions = ({ getPrescriptions, users: { datas }, history }) => {
-  useEffect(() => {
-    getPrescriptions();
-  }, [getPrescriptions]);
+// export default function LabTabs() {
+//   const [value, setValue] = React.useState("1");
 
-  const onClick = (e, row) => {
-    e.preventDefault();
-    history.push({
-      pathname: "/admin/prescription/view",
-      state: { detail: row },
-    });
-  };
+//   const handleChange = (event, newValue) => {
+//     setValue(newValue);
+//   };
 
-  return (
-    <div className="content">
-      <Row>
-        <Col md="12">
-          <Card>
-            <CardBody>
-              <MaterialTable
-                icons={icons}
-                options={{
-                  filtering: true,
+//   return (
+//     <div className="content">
+//       <Box sx={{ width: "100%", typography: "body1" }}>
+//         <TabContext value={value}>
+//           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+//             <TabList onChange={handleChange} aria-label="lab API tabs example">
+//               <Tab label="General" value="1" />
+//               <Tab label="Psychotropic" value="2" />
+//               <Tab label="Narcotic" value="3" />
+//               <Tab label="Instrument" value="4" />
+//             </TabList>
+//           </Box>
+//           <TabPanel value="1">
+//             <GeneralPrescriptions />
+//           </TabPanel>
+//           <TabPanel value="2">
+//             <PsychotropicPrescriptions />
+//           </TabPanel>
+//           <TabPanel value="3">
+//             <NarcoticPrescriptions />
+//           </TabPanel>
+//           <TabPanel value="4">
+//             <InstrumentPrescriptions />
+//           </TabPanel>
+//         </TabContext>
+//       </Box>
+//     </div>
+//   );
+// }
 
-                  pageSize: 50,
-                  padding: "dense",
-                  pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
-                  paging: true,
-                  actionsColumnIndex: -1,
-                  maxBodyHeight: "350px",
-                }}
-                isLoading={false}
-                columns={[
-                  { title: "#", render: (rowData) => rowData.tableData.id + 1 },
-                  {
-                    title: "Patient",
-                    render: (patient) => {
-                      return `${patient.patient?.name} ${patient.patient?.fathername}`;
-                    },
-                  },
-                  { title: "Drug", render: (row) => {
-                    return `${row.drug?.name} , ${row.drug?.strength}${row.drug?.unit}`;
-                  }, },
-                  { title: "Code", field: "code" },
-                  { title: "Dose", field: "dose" },
-                  { title: "Take in", field: "takein" },
-                  { title: "Frequency", field: "frequency" },
-                ]}
-                data={datas}
-                title="Prescriptions"
-                actions={[
-                  {
-                    icon: () => <Edit />,
-                    tooltip: "View Prescription",
-                    onClick: (event, rowData) =>
-                      alert("Permission " + rowData.name),
-                  },
-                ]}
-              />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    </div>
-  );
-};
+import * as React from "react";
+import {
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Card,
+  Button,
+  CardTitle,
+  CardText,
+  Row,
+  Col,
+} from "reactstrap";
+import classnames from "classnames";
+import GeneralPrescriptions from "./types/general";
+import InstrumentPrescriptions from "./types/instrument";
+import NarcoticPrescriptions from "./types/narcotic";
+import PsychotropicPrescriptions from "./types/psychotropic";
 
-Prescriptions.propTypes = {};
-const mapStateToProps = (state) => ({
-  users: state.users,
-  auth: state.auth,
-});
-export default connect(mapStateToProps, {
-  getPrescriptions,
-})(withRouter(Prescriptions));
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      activeTab: "1",
+    };
+  }
+
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab,
+      });
+    }
+  }
+  render() {
+    return (
+      <div className="content">
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === "1" })}
+              onClick={() => {
+                this.toggle("1");
+              }}
+            >
+              General
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === "2" })}
+              onClick={() => {
+                this.toggle("2");
+              }}
+            >
+              Psychotropic
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === "3" })}
+              onClick={() => {
+                this.toggle("3");
+              }}
+            >
+              Narcotic
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === "4" })}
+              onClick={() => {
+                this.toggle("4");
+              }}
+            >
+              Instrument
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <Row>
+              <Col sm="12">
+                <GeneralPrescriptions />
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="2">
+            <Row>
+              <PsychotropicPrescriptions />
+            </Row>
+          </TabPane>
+
+          <TabPane tabId="3">
+            <Row>
+              <Col sm="12">
+                <NarcoticPrescriptions />
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="4">
+            <Row>
+              <InstrumentPrescriptions />
+            </Row>
+          </TabPane>
+        </TabContent>
+      </div>
+    );
+  }
+}

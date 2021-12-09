@@ -15,10 +15,10 @@ const Patients = ({
   history,
   getPatients,
   deletePatient,
-  users: { datas },  
+  users: { datas },
 }) => {
   useEffect(() => {
-    getPatients();   
+    getPatients();
   }, [getPatients]);
 
   const onAddClick = (e) => {
@@ -49,7 +49,6 @@ const Patients = ({
     });
 
     if (willDelete) {
-      console.log(row);
       const res = await deletePatient(row.id);
       if (res != null) {
         swal("Deleted!", "Your Patient data has been deleted!", "success");
@@ -58,10 +57,7 @@ const Patients = ({
   };
 
   const onViewClick = (e, row) => {
-    e.preventDefault();
-    console.log("====================================");
-    console.log(row);
-    console.log("====================================");
+    e.preventDefault();    
     history.push({
       pathname: "/admin/patient/detail",
       state: { detail: row },
@@ -85,15 +81,19 @@ const Patients = ({
                   paging: true,
                   actionsColumnIndex: -1,
                   maxBodyHeight: "350px",
+                  cellStyle: {
+                    fontSize: "13px",
+                  },
+                  headerStyle: {
+                    fontSize: "13px",
+                  },
                 }}
                 isLoading={false}
                 columns={[
                   { title: "#", render: (rowData) => rowData.tableData.id + 1 },
                   { title: "Name", field: "name" },
                   { title: "F Name", field: "fathername" },
-                  { title: "G.F Name", field: "grandfathername" },
                   { title: "Phone", field: "phone" },
-                  { title: "Age", field: "age" },
                   { title: "Sex", field: "sex" },
                   { title: "Weight", field: "weight" },
                 ]}
@@ -111,11 +111,11 @@ const Patients = ({
                     tooltip: "Edit Patient",
                     onClick: (event, rowData) => onEditClick(event, rowData),
                   },
-                  {
-                    icon: () => <RemoveRedEyeOutlined />,
-                    tooltip: "View History",
-                    onClick: (event, rowData) => onViewClick(event, rowData),
-                  },
+                  // {
+                  //   icon: () => <RemoveRedEyeOutlined />,
+                  //   tooltip: "View History",
+                  //   onClick: (event, rowData) => onViewClick(event, rowData),
+                  // },
                   {
                     icon: () => <DeleteOutline />,
                     tooltip: "Delete Patient",

@@ -1,13 +1,20 @@
 import axios from "axios";
-import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA, GET_USERS } from "./types";
+import {
+  GET_DATAS,
+  POST_ERROR,
+  ADD_USER,
+  DELETE_DATA,
+  GET_USERS,
+} from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
+import { apiUrl } from "./constant";
 
 export const getUsers = () => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
-    const res = await axios.get("http://localhost:3500/api/users");
+    const res = await axios.get(apiUrl + "/users");
     console.log(res.data);
 
     dispatch({
@@ -28,7 +35,7 @@ export const getUsers = () => async (dispatch) => {
 //DELETE USER
 export const deleteUser = (id) => async (dispatch) => {
   try {
-    await axios.delete(`http://localhost:3500/api/users/delete/${id}`);
+    await axios.delete(apiUrl + `/users/delete/${id}`);
     dispatch({
       type: DELETE_DATA,
       payload: id,
@@ -54,11 +61,7 @@ export const addUser = (formData) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post(
-      "http://localhost:3500/api/users/register",
-      formData,
-      config
-    );
+    const res = await axios.post(apiUrl + "/users/register", formData, config);
     console.log(res.data);
     dispatch({
       type: ADD_USER,
@@ -86,7 +89,7 @@ export const updateUser = (formData) => async (dispatch) => {
   };
   try {
     const res = await axios.put(
-      "http://localhost:3500/api/users/update/" + formData.id,
+      apiUrl + "/users/update/" + formData.id,
       formData,
       config
     );
@@ -123,7 +126,45 @@ export const enableDisableUser = (row) => async (dispatch) => {
       formData = { active: "false" };
     }
     const res = await axios.post(
-      "http://localhost:3500/api/users/enable/" + row.user.id,
+      apiUrl + "/users/enable/" + row.user.id,
+      formData,
+      config
+    );
+    console.log(res.data);
+    // dispatch({
+    //   type: UPDATE_DATA,
+    //   payload: row,
+    // });
+    return res.data;
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+    return null;
+  }
+};
+
+
+//Update user
+export const canSee = (row) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    var formData = null;
+    if (row.user.isFit === "false") {
+      formData = { isFit: "true" };
+    } else {
+      formData = { isFit: "false" };
+    }
+    const res = await axios.post(
+      apiUrl + "/users/cansee/grant/" + row.user.id,
       formData,
       config
     );

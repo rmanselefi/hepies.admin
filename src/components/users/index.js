@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   getUsers,
   deleteUser,
+  canSee,
   enableDisableUser,
 } from "../../store/actions/user";
 import { withRouter } from "react-router";
@@ -19,6 +20,7 @@ const Users = ({
   history,
   getUsers,
   deleteUser,
+  canSee,
   enableDisableUser,
   users: { users },
 }) => {
@@ -27,14 +29,22 @@ const Users = ({
   }, [getUsers]);
 
   const handleChange = async (event, row) => {
-    console.log('====================================');
-    console.log(row);
-    console.log('====================================');
     event.preventDefault();
-    const res= await enableDisableUser(row);
-    if(res!=null){
+    const res = await enableDisableUser(row);
+    if (res != null) {
       getUsers();
-    }    
+    }
+  };
+
+  const handleFitChange = async (event, row) => {
+    event.preventDefault();
+    const res = await canSee(row);
+    console.log("====================================");
+    console.log(res);
+    console.log("====================================");
+    if (res != null) {
+      getUsers();
+    }
   };
   const onAddClick = (e) => {
     e.preventDefault();
@@ -89,14 +99,20 @@ const Users = ({
                   pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
                   paging: true,
                   actionsColumnIndex: -1,
-                  maxBodyHeight: "350px",
+                  maxBodyHeight: "450px",
+                  cellStyle: {
+                    fontSize: "13px",
+                  },
                 }}
                 isLoading={false}
                 columns={[
                   { title: "#", render: (rowData) => rowData.tableData.id + 1 },
                   { title: "Name", field: "name" },
                   { title: "Username", field: "user.username" },
-                  { title: "Profession", field: "proffesion" },
+                  {
+                    title: "Profession",
+                    field: "proffesion",
+                  },
                   { title: "Points", field: "points" },
                   { title: "Phone", field: "phone" },
                   {
@@ -108,6 +124,19 @@ const Users = ({
                           checked={row.user?.active === "false" ? false : true}
                           onChange={(e) => handleChange(e, row)}
                           name={"active"}
+                          color="primary"
+                        />
+                      </div>
+                    ),
+                  },
+                  {
+                    title: "Psyco/Narco",
+                    render: (row) => (
+                      <div>
+                        <Switch
+                          checked={row.user?.isFit === "false" ? false : true}
+                          onChange={(e) => handleFitChange(e, row)}
+                          name={"isFit"}
                           color="primary"
                         />
                       </div>
@@ -163,5 +192,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getUsers,
   deleteUser,
+  canSee,
   enableDisableUser,
 })(withRouter(Users));

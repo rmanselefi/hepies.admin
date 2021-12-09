@@ -14,7 +14,7 @@ import {
 import { connect } from "react-redux";
 import { addDrug, updateDrug } from "../../../store/actions/drug";
 import swal from "sweetalert";
-import { AvForm, AvField } from "availity-reactstrap-validation";
+import { AvForm, AvField } from 'availity-reactstrap-validation'
 
 const DrugForm = ({ addDrug, updateDrug, location }) => {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
     strength: "",
     unit: "",
     about: "",
-    route: "",
+    route: ""
   });
   const { state } = location;
 
@@ -37,7 +37,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
         strength: state.detail.strength,
         unit: state.detail.unit,
         description: state.detail.about,
-        route: state.detail.route,
+        route:state.detail.route
       });
     }
   }, [state]);
@@ -52,7 +52,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
     e.preventDefault();
     const data =
       state != null ? await updateDrug(formData) : await addDrug(formData);
-
+   
     if (data != null) {
       swal(
         "Saved!",
@@ -127,14 +127,14 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
                 </Row>
                 <Row>
                   <Col className="px-1" md="6">
-                    <FormGroup>
+                  <FormGroup>
                       <label>Route</label>
                       <AvField
                         placeholder="Route"
                         type="text"
                         value={formData.route}
                         onChange={handleChange("route")}
-                        name="route"
+                        name="route"                        
                       />
                     </FormGroup>
                   </Col>
@@ -147,6 +147,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
                         value={formData.description}
                         onChange={handleChange("description")}
                         name="description"
+                        
                       />
                     </FormGroup>
                   </Col>

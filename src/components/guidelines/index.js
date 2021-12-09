@@ -1,33 +1,34 @@
 import React, { useEffect } from "react";
+import {
+  getGuidelines,
+  deleteGuideline,
+} from "../../store/actions/guidelinesActions";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Edit from "@material-ui/icons/Edit";
-import swal from 'sweetalert'
+import swal from "sweetalert";
 
 import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../shared/icons";
-import { getPoints, deletePoint } from "../../store/actions/points";
 
-const Points = ({ history, getPoints,deletePoint, users: { datas } }) => {
+const Guidelines = ({
+  history,
+  getGuidelines,
+  deleteGuideline,
+  users: { datas },
+}) => {
   useEffect(() => {
-    getPoints();
-  }, [getPoints]);
+    getGuidelines();
+  }, [getGuidelines]);
 
   const onAddClick = (e) => {
     e.preventDefault();
-    history.push("/admin/point/add");
+    history.push("/admin/guideline/add");
   };
 
-  const onEditClick = (e, row) => {
-    e.preventDefault();
-    history.push({
-      pathname: "/admin/point/edit",
-      state: { detail: row },
-    });
-  };
   const onDeleteClick = async (e, row) => {
     e.preventDefault();
     const willDelete = await swal({
@@ -44,9 +45,9 @@ const Points = ({ history, getPoints,deletePoint, users: { datas } }) => {
     });
 
     if (willDelete) {
-      const res = await deletePoint(row.id);
+      const res = await deleteGuideline(row.id);
       if (res != null) {
-        swal("Deleted!", "Your Point data has been deleted!", "success");
+        swal("Deleted!", "Your Guideline data has been deleted!", "success");
       }
     }
   };
@@ -66,34 +67,26 @@ const Points = ({ history, getPoints,deletePoint, users: { datas } }) => {
                   pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
                   paging: true,
                   actionsColumnIndex: -1,
-                  maxBodyHeight: "350px",
+                  maxBodyHeight: "650px",
                 }}
                 isLoading={false}
                 columns={[
-                  { title: "#", render: (rowData) => rowData.tableData.id + 1 },
-                  { title: "Point", field: "point" },
-                  { title: "When", field: "when" },
-                  { title: "To", field: "to" },
+                  { title: "#", render: (rowData) => rowData.id + 1 },
+                  { title: "File", field: "name" },
                 ]}
                 data={datas}
-                title="Patients"
+                title="Guidelines List"
                 actions={[
                   {
                     icon: () => <AddBox />,
-                    tooltip: "Add Point",
+                    tooltip: "Add GuideLine",
                     isFreeAction: true,
                     onClick: (event) => onAddClick(event),
                   },
                   {
-                    icon: () => <Edit />,
-                    tooltip: "Edit Point",
-                    onClick: (event, rowData) => onEditClick(event, rowData),
-                  },
-                  {
                     icon: () => <DeleteOutline />,
-                    tooltip: "Delete Point",
-                    onClick: (event, rowData) =>onDeleteClick(event,rowData)
-                     
+                    tooltip: "Delete GuideLine",
+                    onClick: (event, rowData) => onDeleteClick(event, rowData),
                   },
                 ]}
               />
@@ -105,12 +98,13 @@ const Points = ({ history, getPoints,deletePoint, users: { datas } }) => {
   );
 };
 
-Points.propTypes = {};
+Guidelines.propTypes = {};
 
 const mapStateToProps = (state) => ({
   users: state.users,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {
-  getPoints,deletePoint
-})(withRouter(Points));
+  getGuidelines,
+  deleteGuideline,
+})(withRouter(Guidelines));

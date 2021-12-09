@@ -1,13 +1,14 @@
 import axios from "axios";
 import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
+import { apiUrl } from "./constant";
 
 export const getPatients = () => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
-    const res = await axios.get("http://localhost:3500/api/patient");
+    const res = await axios.get(apiUrl + "/patient");
     console.log(res.data);
 
     dispatch({
@@ -36,11 +37,7 @@ export const addPatient = (formData) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post(
-      "http://localhost:3500/api/patient",
-      formData,
-      config
-    );
+    const res = await axios.post(apiUrl + "/patient", formData, config);
     if (res.data != null) {
       return res.data;
     }
@@ -72,7 +69,7 @@ export const updatePatient = (formData) => async (dispatch) => {
   };
   try {
     const res = await axios.put(
-      "http://localhost:3500/api/patient/" + formData.id,
+      apiUrl + "/patient/" + formData.id,
       formData,
       config
     );
@@ -96,25 +93,25 @@ export const updatePatient = (formData) => async (dispatch) => {
 };
 
 //DELETE PATIENT
-export const deletePatient = id => async dispatch => {
-    try {
-         const res=await axios.delete(`http://localhost:3500/api/patient/${id}`);
-         console.log('====================================');
-         console.log(res.data);
-         console.log('====================================');
-        dispatch({
-            type: DELETE_DATA,
-            payload: id
-        });
-        return id;
-    } catch (error) {
-        dispatch({
-            type: POST_ERROR,
-            payload: {
-                msg: error.response.statusText,
-                status: error.response.status
-            }
-        })
-        return null;
-    }
+export const deletePatient = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(apiUrl + `/patient/${id}`);
+    console.log("====================================");
+    console.log(res.data);
+    console.log("====================================");
+    dispatch({
+      type: DELETE_DATA,
+      payload: id,
+    });
+    return id;
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+    return null;
+  }
 };

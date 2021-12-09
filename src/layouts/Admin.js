@@ -56,7 +56,7 @@ function Dashboard(props) {
             );
           })}
         </Switch>
-        <Footer fluid />
+        {/* <Footer fluid /> */}
       </div>
      
     </div>

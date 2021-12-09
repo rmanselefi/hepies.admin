@@ -3,12 +3,12 @@ import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
 
-export const getPoints = () => async (dispatch) => {
+export const getVouchers = () => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
-    const res = await axios.get(apiUrl + "/points");
+    const res = await axios.get(apiUrl + "/voucher");
     console.log(res.data);
 
     dispatch({
@@ -27,7 +27,7 @@ export const getPoints = () => async (dispatch) => {
 };
 
 //Add Post
-export const addPoint = (formData) => async (dispatch) => {
+export const addVoucher = (formData) => async (dispatch) => {
   delete formData.id;
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
@@ -38,7 +38,7 @@ export const addPoint = (formData) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post(apiUrl + "/points", formData, config);
+    const res = await axios.post(apiUrl + "/voucher", formData, config);
     if (res.data != null) {
       return res.data;
     }
@@ -59,7 +59,7 @@ export const addPoint = (formData) => async (dispatch) => {
 };
 
 //Add Post
-export const updatePoint = (formData) => async (dispatch) => {
+export const updateVoucher = (formData) => async (dispatch) => {
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
   }
@@ -70,7 +70,7 @@ export const updatePoint = (formData) => async (dispatch) => {
   };
   try {
     const res = await axios.put(
-      apiUrl + "/points/" + formData.id,
+      apiUrl + "/voucher/" + formData.id,
       formData,
       config
     );
@@ -94,12 +94,9 @@ export const updatePoint = (formData) => async (dispatch) => {
 };
 
 //DELETE PATIENT
-export const deletePoint = (id) => async (dispatch) => {
+export const deleteVoucher = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(apiUrl + `/points/${id}`);
-    console.log("====================================");
-    console.log(res.data);
-    console.log("====================================");
+    await axios.delete(apiUrl + `/voucher/${id}`);
     dispatch({
       type: DELETE_DATA,
       payload: id,

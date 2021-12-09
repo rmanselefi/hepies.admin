@@ -7,13 +7,14 @@ import {
     ADD_USER
 } from './types';
 import setAuthToken from '../../components/utils/setAuthToken'
+import { apiUrl } from './constant';
 
 export const getPrescriptions = () => async dispatch => {
     try {
         if (localStorage.getItem('token')) {
             setAuthToken(localStorage.getItem('token'));
         }
-        const res = await axios.get('http://localhost:3500/api/prescription');
+        const res = await axios.get(apiUrl+'/prescription');
         console.log(res.data);
         
         dispatch({
@@ -99,7 +100,7 @@ export const addPost = formData => async dispatch => {
         }
     }
     try {
-        const res = await axios.post('http://localhost:5000/post/create', formData, config);
+        const res = await axios.post('/post/create', formData, config);
         console.log(res.data)
         dispatch({
             type: ADD_USER,
