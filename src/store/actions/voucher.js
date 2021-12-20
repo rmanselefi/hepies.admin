@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA } from "./types";
+import {
+  GET_VOUCHERS,
+  VOUCHER_ERROR,
+  ADD_VOUCHER,
+  UPDATE_VOUCHER,
+  DELETE_VOUCHER,
+} from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
 
@@ -12,12 +18,12 @@ export const getVouchers = () => async (dispatch) => {
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_VOUCHERS,
       payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: VOUCHER_ERROR,
       payload: {
         msg: error,
         status: error,
@@ -26,7 +32,7 @@ export const getVouchers = () => async (dispatch) => {
   }
 };
 
-//Add Post
+//Add Voucher
 export const addVoucher = (formData) => async (dispatch) => {
   delete formData.id;
   if (localStorage.getItem("token")) {
@@ -43,12 +49,12 @@ export const addVoucher = (formData) => async (dispatch) => {
       return res.data;
     }
     dispatch({
-      type: ADD_USER,
-      payload: res.data,
+      type: ADD_VOUCHER,
+      payload: formData,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: VOUCHER_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -58,7 +64,7 @@ export const addVoucher = (formData) => async (dispatch) => {
   }
 };
 
-//Add Post
+//Update Voucher
 export const updateVoucher = (formData) => async (dispatch) => {
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
@@ -78,12 +84,12 @@ export const updateVoucher = (formData) => async (dispatch) => {
       return res.data;
     }
     dispatch({
-      type: ADD_USER,
-      payload: res.data,
+      type: UPDATE_VOUCHER,
+      payload: formData,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: VOUCHER_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -93,18 +99,18 @@ export const updateVoucher = (formData) => async (dispatch) => {
   }
 };
 
-//DELETE PATIENT
+//DELETE VOUCHER
 export const deleteVoucher = (id) => async (dispatch) => {
   try {
     await axios.delete(apiUrl + `/voucher/${id}`);
     dispatch({
-      type: DELETE_DATA,
+      type: DELETE_VOUCHER,
       payload: id,
     });
     return id;
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: VOUCHER_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,

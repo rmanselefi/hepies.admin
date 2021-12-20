@@ -148,7 +148,6 @@ export const enableDisableUser = (row) => async (dispatch) => {
   }
 };
 
-
 //Update user
 export const canSee = (row) => async (dispatch) => {
   const config = {
@@ -183,5 +182,33 @@ export const canSee = (row) => async (dispatch) => {
       },
     });
     return null;
+  }
+};
+
+export const getUserHistory = (id, type) => async (dispatch) => {
+  try {
+    if (localStorage.getItem("token")) {
+      setAuthToken(localStorage.getItem("token"));
+    }
+    let res;
+    if (type === "Pharmacist") {
+      res = await axios.get(apiUrl + "/users/pharmacy/history/" + id);
+    } else {
+      res = await axios.get(apiUrl + "/users/prescription/history/" + id);
+    }
+    console.log(res.data);
+
+    dispatch({
+      type: GET_USERS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
   }
 };

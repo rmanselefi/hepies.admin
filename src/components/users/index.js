@@ -7,7 +7,15 @@ import {
   enableDisableUser,
 } from "../../store/actions/user";
 import { withRouter } from "react-router";
-import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+  Button,
+} from "reactstrap";
 import Switch from "@material-ui/core/Switch";
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
@@ -23,10 +31,14 @@ const Users = ({
   canSee,
   enableDisableUser,
   users: { users },
+  auth: { user },
 }) => {
   useEffect(() => {
     getUsers();
   }, [getUsers]);
+
+  const name = user != null ? user?.role.name : null;
+  
 
   const handleChange = async (event, row) => {
     event.preventDefault();
@@ -81,6 +93,15 @@ const Users = ({
       }
     }
   };
+
+  const onHistoryClick = (e, row) => {
+    e.preventDefault();
+    history.push({
+      pathname: "/admin/user/history",
+      state: { detail: row },
+    });
+  };
+
   return (
     <div className="content">
       <Row>
@@ -113,8 +134,36 @@ const Users = ({
                     title: "Profession",
                     field: "proffesion",
                   },
+                  { title: "Work Place", field: "workplace" },
                   { title: "Points", field: "points" },
                   { title: "Phone", field: "phone" },
+                  { title: "Email", field: "email" },
+                  {
+                    title: "Practice License",
+                    render: (row) => {
+                      return (
+                        <img
+                          src={row.license}
+                          alt={"license"}
+                          height="30"
+                          width="30"
+                        />
+                      );
+                    },
+                  },
+                  {
+                    title: "History",
+                    render: (row) => {
+                      return (
+                        <Button
+                          color="link"
+                          onClick={(event) => onHistoryClick(event, row)}
+                        >
+                          History
+                        </Button>
+                      );
+                    },
+                  },
                   {
                     title: "Active",
                     field: "user.active",
@@ -145,36 +194,30 @@ const Users = ({
                 ]}
                 data={users}
                 title="Users"
-                actions={[
-                  {
-                    icon: () => <AddBox />,
-                    tooltip: "Register User",
-                    isFreeAction: true,
-                    onClick: (event) => onAddClick(event),
-                  },
-                  {
-                    icon: () => <Edit />,
-                    tooltip: "Edit User",
-                    onClick: (event, rowData) => onEditClick(event, rowData),
-                  },
-                  {
-                    icon: () => <DeleteOutline />,
-                    tooltip: "Delete User",
-                    onClick: (event, rowData) => onDeleteClick(event, rowData),
-                  },
-                  // {
-                  //   icon: () => (
-                  //     <Switch
-                  //       checked={}
-                  //       onChange={(e,row)=>handleChange(e,row)}
-                  //       color="primary"
-                  //       name="checkedB"
-                  //       inputProps={{ "aria-label": "primary checkbox" }}
-                  //     />
-                  //   ),
-                  //   tooltip: "Enable/Disable User",
-                  // },
-                ]}
+                actions={
+                  name === "admin" && name !== null
+                    ? [
+                        {
+                          icon: () => <AddBox />,
+                          tooltip: "Register User",
+                          isFreeAction: true,
+                          onClick: (event) => onAddClick(event),
+                        },
+                        {
+                          icon: () => <Edit />,
+                          tooltip: "Edit User",
+                          onClick: (event, rowData) =>
+                            onEditClick(event, rowData),
+                        },
+                        {
+                          icon: () => <DeleteOutline />,
+                          tooltip: "Delete User",
+                          onClick: (event, rowData) =>
+                            onDeleteClick(event, rowData),
+                        },
+                      ]
+                    : null
+                }
               />
             </CardBody>
           </Card>

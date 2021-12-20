@@ -21,7 +21,7 @@ const MyPharmacy = ({
   getMyPharmacyById,
   deleteDrug,
   location,
-  users: { datas },
+  pharmacies
 }) => {
   const { state } = location;
  
@@ -91,7 +91,7 @@ const MyPharmacy = ({
                   { title: "Drug Name", field: "drug_name" },
                   { title: "Price", field: "price" },
                 ]}
-                data={datas}
+                data={pharmacies}
                 title={"My Pharmacy for " + state.detail.name}
                 // actions={[
                 //   {
@@ -123,7 +123,7 @@ const MyPharmacy = ({
 MyPharmacy.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  pharmacies: state.pharmacy.pharmacies,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

@@ -15,7 +15,7 @@ const Pharmacy = ({
   history,
   getPharmacists,
   deleteDrug,
-  users: { datas },
+  pharmacies,
 }) => {
   useEffect(() => {
     getPharmacists();
@@ -122,7 +122,7 @@ const Pharmacy = ({
                     },
                   },
                 ]}
-                data={datas}
+                data={pharmacies}
                 title="Pharmacies"
                 // actions={[
                 //   {
@@ -154,7 +154,7 @@ const Pharmacy = ({
 Pharmacy.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  pharmacies: state.pharmacy.pharmacies,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

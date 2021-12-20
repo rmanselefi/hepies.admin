@@ -23,6 +23,8 @@ import pharmacy from "components/pharmacy";
 import voucher from "components/voucher";
 import voucherform from "components/voucher/voucherform";
 import mypharmacy from "components/pharmacy/mypharmacy";
+import userHistory from "components/users/userHistory/userHistory";
+import prescriptionPaper from "components/prescriptions/prescriptionPaper";
 
 var routes = [
   {
@@ -53,6 +55,13 @@ var routes = [
     layout: "/admin",
     show: false,
   },
+
+  {
+    path: "/user/history",
+    component: userHistory,
+    layout: "/admin",
+    show: false,
+  },
   {
     path: "/prescriptions",
     name: "Prescriptions",
@@ -64,6 +73,13 @@ var routes = [
   {
     path: "/prescription/edit",
     component: PrescriptionForm,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/prescription/view",
+    component: prescriptionPaper,
     layout: "/admin",
     show: false,
   },

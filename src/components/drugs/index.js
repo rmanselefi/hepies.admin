@@ -7,15 +7,16 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Edit from "@material-ui/icons/Edit";
 import swal from "sweetalert";
 
-import { Card, CardBody, Row, Col } from "reactstrap";
+import { Card, CardBody, Row, Col, Button } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../shared/icons";
 
-const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
+const Drug = ({ history, getDrugs, deleteDrug, drugs, auth: { user } }) => {
   useEffect(() => {
     getDrugs();
   }, [getDrugs]);
 
+  const name = user != null ? user?.role.name : null;
   const onAddClick = (e) => {
     e.preventDefault();
     history.push("/admin/drug/add");
@@ -72,11 +73,15 @@ const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
                 columns={[
                   { title: "#", render: (rowData) => rowData.id + 1 },
                   { title: "Name", field: "name" },
-                  { title: "Category", field: "category" },
+                  { title: "Category", field: "type" },
                   { title: "Strength", field: "strength" },
                   { title: "Unit", field: "unit" },
+                  {
+                    title: "Prescription number",
+                    field: "number_prescription",
+                  },
                 ]}
-                data={datas}
+                data={drugs}
                 title="Drug datas"
                 actions={[
                   {
@@ -85,11 +90,14 @@ const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
                     isFreeAction: true,
                     onClick: (event) => onAddClick(event),
                   },
-                  {
-                    icon: () => <Edit />,
-                    tooltip: "Edit Drug",
-                    onClick: (event, rowData) => onEditClick(event, rowData),
-                  },
+                  name === "admin" && name !== null
+                    ? {
+                        icon: () => <Edit />,
+                        tooltip: "Edit Drug",
+                        onClick: (event, rowData) =>
+                          onEditClick(event, rowData),
+                      }
+                    : null,
                   {
                     icon: () => <DeleteOutline />,
                     tooltip: "Delete Drug",
@@ -108,7 +116,7 @@ const Drug = ({ history, getDrugs, deleteDrug, users: { datas } }) => {
 Drug.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  drugs: state.drugs.drugs,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

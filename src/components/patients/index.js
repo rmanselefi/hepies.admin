@@ -15,7 +15,7 @@ const Patients = ({
   history,
   getPatients,
   deletePatient,
-  users: { datas },
+  patients,
 }) => {
   useEffect(() => {
     getPatients();
@@ -57,7 +57,7 @@ const Patients = ({
   };
 
   const onViewClick = (e, row) => {
-    e.preventDefault();    
+    e.preventDefault();
     history.push({
       pathname: "/admin/patient/detail",
       state: { detail: row },
@@ -92,12 +92,12 @@ const Patients = ({
                 columns={[
                   { title: "#", render: (rowData) => rowData.tableData.id + 1 },
                   { title: "Name", field: "name" },
-                  { title: "F Name", field: "fathername" },
-                  { title: "Phone", field: "phone" },
+                  { title: "Father Name", field: "fathername" },
+                  { title: "Age", field: "age" },
                   { title: "Sex", field: "sex" },
                   { title: "Weight", field: "weight" },
                 ]}
-                data={datas}
+                data={patients}
                 title="Patients"
                 actions={[
                   {
@@ -106,16 +106,7 @@ const Patients = ({
                     isFreeAction: true,
                     onClick: (event) => onAddClick(event),
                   },
-                  {
-                    icon: () => <Edit />,
-                    tooltip: "Edit Patient",
-                    onClick: (event, rowData) => onEditClick(event, rowData),
-                  },
-                  // {
-                  //   icon: () => <RemoveRedEyeOutlined />,
-                  //   tooltip: "View History",
-                  //   onClick: (event, rowData) => onViewClick(event, rowData),
-                  // },
+
                   {
                     icon: () => <DeleteOutline />,
                     tooltip: "Delete Patient",
@@ -134,7 +125,7 @@ const Patients = ({
 Patients.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  patients: state.patient.patients,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

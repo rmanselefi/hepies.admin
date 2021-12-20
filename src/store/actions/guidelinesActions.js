@@ -1,10 +1,9 @@
 import firebase from "../../components/config/firebase";
 import {
-  UPDATE_DATA,
-  ADD_USER,
-  POST_ERROR,
-  DELETE_DATA,
-  GET_DATAS,
+  GET_GUIDELINES,
+  GUIDELINE_ERROR,
+  ADD_GUIDELINE,
+  DELETE_GUIDELINE,
 } from "./types";
 import axios from "axios";
 import { apiUrl, localUrl } from "./constant";
@@ -19,12 +18,12 @@ export const getGuidelines = () => async (dispatch) => {
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_GUIDELINES,
       payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: GUIDELINE_ERROR,
       payload: {
         msg: error,
         status: error,
@@ -77,12 +76,12 @@ export const saveGuideline = (guideline) => async (dispatch) => {
                     return res.data;
                   }
                   dispatch({
-                    type: ADD_USER,
-                    payload: res.data,
+                    type: ADD_GUIDELINE,
+                    payload: formData,
                   });
                 } catch (error) {
                   dispatch({
-                    type: POST_ERROR,
+                    type: GUIDELINE_ERROR,
                     payload: {
                       msg: error.response.statusText,
                       status: error.response.status,
@@ -98,9 +97,9 @@ export const saveGuideline = (guideline) => async (dispatch) => {
     }
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: GUIDELINE_ERROR,
       payload: {
-        msg: "Drug is not saved",
+        msg: "Guideline is not saved",
       },
     });
   }
@@ -111,13 +110,13 @@ export const deleteGuideline = (guideId) => async (dispatch) => {
     await axios.delete(apiUrl + `/guidelines/${guideId}`);
 
     dispatch({
-      type: DELETE_DATA,
+      type: DELETE_GUIDELINE,
       payload: guideId,
     });
     return guideId;
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: GUIDELINE_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,

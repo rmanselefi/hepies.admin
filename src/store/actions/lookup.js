@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA } from "./types";
+import {  
+  GET_LOOKUPS,
+  LOOKUP_ERROR,
+  ADD_LOOKUP,
+  UPDATE_LOOKUP,
+  DELETE_LOOKUP,
+} from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
 
@@ -12,12 +18,12 @@ export const getLookups = () => async (dispatch) => {
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_LOOKUPS,
       payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: LOOKUP_ERROR,
       payload: {
         msg: error,
         status: error,
@@ -42,12 +48,12 @@ export const addLookup = (formData) => async (dispatch) => {
       return res.data;
     }
     dispatch({
-      type: ADD_USER,
-      payload: res.data,
+      type: ADD_LOOKUP,
+      payload: formData,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: LOOKUP_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -57,7 +63,7 @@ export const addLookup = (formData) => async (dispatch) => {
   }
 };
 
-//Add Post
+//UPDATE LOOKUP
 export const updateLookup = (formData) => async (dispatch) => {
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
@@ -77,12 +83,12 @@ export const updateLookup = (formData) => async (dispatch) => {
       return res.data;
     }
     dispatch({
-      type: ADD_USER,
-      payload: res.data,
+      type: UPDATE_LOOKUP,
+      payload: formData,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: LOOKUP_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -92,21 +98,19 @@ export const updateLookup = (formData) => async (dispatch) => {
   }
 };
 
-//DELETE PATIENT
+//DELETE LOOKUP
 export const deleteLookup = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(`http://localhost:3500/api/lookup/${id}`);
-    console.log("====================================");
-    console.log(res.data);
-    console.log("====================================");
+    await axios.delete(`http://localhost:3500/api/lookup/${id}`);
+
     dispatch({
-      type: DELETE_DATA,
+      type: DELETE_LOOKUP,
       payload: id,
     });
     return id;
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: LOOKUP_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,

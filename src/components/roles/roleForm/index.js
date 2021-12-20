@@ -41,9 +41,7 @@ const RoleForm = ({ addRole, updateRole, location }) => {
   const hadleSubmit = async (e) => {
     e.preventDefault();
     const data = state != null ? await updateRole(formData) : addRole(formData);
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
+   
     if (data != null) {
       swal("Saved!", "Your role data has been saved!", "success");
     }

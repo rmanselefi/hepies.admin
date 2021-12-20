@@ -1,24 +1,29 @@
 import axios from "axios";
-import { GET_DATAS, POST_ERROR,ADD_USER, DELETE_DATA } from "./types";
+import {
+  GET_DRUGS,  
+  DRUG_ERROR,
+  ADD_DRUG,
+  UPDATE_DRUG,
+  DELETE_DRUG,
+} from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
-
 
 export const getDrugs = () => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
-    const res = await axios.get(apiUrl+"/drugs");
+    const res = await axios.get(apiUrl + "/drugs");
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_DRUGS,
       payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: DRUG_ERROR,
       payload: {
         msg: error,
         status: error,
@@ -27,36 +32,35 @@ export const getDrugs = () => async (dispatch) => {
   }
 };
 
-//Add Post
-export const addDrug = formData => async dispatch => {
+//Add Drug
+export const addDrug = (formData) => async (dispatch) => {
   delete formData.id;
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
   }
   const config = {
-      headers: {
-          'Content-Type':'application/json'
-      }
-  }
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
   try {
-      const res = await axios.post(apiUrl+'/drugs', formData, config);
-      if(res.data!=null){
-        return res.data
-      }
-      dispatch({
-          type: ADD_USER,
-          payload: res.data
-      });        
+    const res = await axios.post(apiUrl + "/drugs", formData, config);
+    if (res.data != null) {
+      return res.data;
+    }
+    dispatch({
+      type: ADD_DRUG,
+      payload: formData,
+    });
   } catch (error) {
-      dispatch({
-          type: POST_ERROR,
-          payload: {
-              msg: error.response.statusText,
-              status: error.response.status
-
-          }
-      })
-      return null;
+    dispatch({
+      type: DRUG_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+    return null;
   }
 };
 
@@ -72,7 +76,7 @@ export const updateDrug = (formData) => async (dispatch) => {
   };
   try {
     const res = await axios.put(
-      apiUrl+"/drugs/" + formData.id,
+      apiUrl + "/drugs/" + formData.id,
       formData,
       config
     );
@@ -80,12 +84,12 @@ export const updateDrug = (formData) => async (dispatch) => {
       return res.data;
     }
     dispatch({
-      type: ADD_USER,
-      payload: res.data,
+      type: UPDATE_DRUG,
+      payload: formData,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: DRUG_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -96,25 +100,23 @@ export const updateDrug = (formData) => async (dispatch) => {
 };
 
 //DELETE PATIENT
-export const deleteDrug = id => async dispatch => {
-    try {
-         const res=await axios.delete(apiUrl+`/drugs/${id}`);
-         console.log('====================================');
-         console.log(res.data);
-         console.log('====================================');
-        dispatch({
-            type: DELETE_DATA,
-            payload: id
-        });
-        return id;
-    } catch (error) {
-        dispatch({
-            type: POST_ERROR,
-            payload: {
-                msg: error.response.statusText,
-                status: error.response.status
-            }
-        })
-        return null;
-    }
+export const deleteDrug = (id) => async (dispatch) => {
+  try {
+    await axios.delete(apiUrl + `/drugs/${id}`);
+
+    dispatch({
+      type: DELETE_DRUG,
+      payload: id,
+    });
+    return id;
+  } catch (error) {
+    dispatch({
+      type: DRUG_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+    return null;
+  }
 };

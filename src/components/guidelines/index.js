@@ -18,7 +18,7 @@ const Guidelines = ({
   history,
   getGuidelines,
   deleteGuideline,
-  users: { datas },
+  guidelines,
 }) => {
   useEffect(() => {
     getGuidelines();
@@ -74,7 +74,7 @@ const Guidelines = ({
                   { title: "#", render: (rowData) => rowData.id + 1 },
                   { title: "File", field: "name" },
                 ]}
-                data={datas}
+                data={guidelines}
                 title="Guidelines List"
                 actions={[
                   {
@@ -101,7 +101,7 @@ const Guidelines = ({
 Guidelines.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  guidelines: state.guidelines.guidelines,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

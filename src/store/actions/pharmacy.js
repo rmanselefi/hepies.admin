@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA } from "./types";
+import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA, GET_PHARMACY } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
 
@@ -12,7 +12,7 @@ export const getPharmacies = () => async (dispatch) => {
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_PHARMACY,
       payload: res.data,
     });
   } catch (error) {
@@ -35,7 +35,7 @@ export const getMyPharmacyById = (id) => async (dispatch) => {
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_PHARMACY,
       payload: res.data,
     });
   } catch (error) {
@@ -64,7 +64,7 @@ export const getPharmacists = () => async (dispatch) => {
   try {
     const res = await axios.post(apiUrl + "/users/role", formData, config);
     dispatch({
-      type: GET_DATAS,
+      type: GET_PHARMACY,
       payload: res.data,
     });
   } catch (error) {

@@ -1,6 +1,15 @@
 import axios from "axios";
 import firebase from "../../components/config/firebase";
-import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA } from "./types";
+import {
+  GET_CONSULTS,
+  POST_ERROR,
+  ADD_USER,
+  DELETE_DATA,
+  ADD_CONSULT,
+  CONSULT_ERROR,
+  DELETE_CONSULT,
+  UPDATE_CONSULT,
+} from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
 
@@ -13,7 +22,7 @@ export const getConsults = () => async (dispatch) => {
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_CONSULTS,
       payload: res.data,
     });
   } catch (error) {
@@ -81,7 +90,7 @@ export const addConsult = (formData) => async (dispatch) => {
                   return res.data;
                 }
                 dispatch({
-                  type: ADD_USER,
+                  type: ADD_CONSULT,
                   payload: res.data,
                 });
               }
@@ -94,13 +103,13 @@ export const addConsult = (formData) => async (dispatch) => {
         return res.data;
       }
       dispatch({
-        type: ADD_USER,
+        type: ADD_CONSULT,
         payload: res.data,
       });
     }
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: CONSULT_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -145,7 +154,7 @@ export const updateConsult = (formData, isUrl) => async (dispatch) => {
             .getDownloadURL()
             .then(async (urls) => {
               if (urls != null) {
-                const formData = {
+                const formUpdateData = {
                   topic: formData.topic,
                   image: urls,
                 };
@@ -156,15 +165,15 @@ export const updateConsult = (formData, isUrl) => async (dispatch) => {
                 };
                 const res = await axios.put(
                   apiUrl + "/consulting/" + formData.id,
-                  formData,
+                  formUpdateData,
                   config
                 );
                 if (res.data != null) {
                   return res.data;
                 }
                 dispatch({
-                  type: ADD_USER,
-                  payload: res.data,
+                  type: UPDATE_CONSULT,
+                  payload: formData,
                 });
               }
             });
@@ -180,13 +189,13 @@ export const updateConsult = (formData, isUrl) => async (dispatch) => {
         return res.data;
       }
       dispatch({
-        type: ADD_USER,
-        payload: res.data,
+        type: UPDATE_CONSULT,
+        payload: formData,
       });
     }
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: CONSULT_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -199,15 +208,15 @@ export const updateConsult = (formData, isUrl) => async (dispatch) => {
 //DELETE CONSULT
 export const deleteConsult = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(apiUrl + `/consulting/${id}`);   
+    const res = await axios.delete(apiUrl + `/consulting/${id}`);
     dispatch({
-      type: DELETE_DATA,
+      type: DELETE_CONSULT,
       payload: id,
     });
     return id;
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: CONSULT_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,

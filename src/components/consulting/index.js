@@ -16,11 +16,13 @@ const Consults = ({
   history,
   getConsults,
   deleteConsult,
-  users: { datas },
+  consults: { consults },
+  auth: { user },
 }) => {
   useEffect(() => {
     getConsults();
   }, [getConsults]);
+  const name = user != null ? user?.role.name : null;
 
   const onAddClick = (e) => {
     e.preventDefault();
@@ -115,26 +117,32 @@ const Consults = ({
                         .includes(term.toLowerCase()),
                   },
                 ]}
-                data={datas}
+                data={consults}
                 title="Consult datas"
-                actions={[
-                  {
-                    icon: () => <AddBox />,
-                    tooltip: "Send Consult",
-                    isFreeAction: true,
-                    onClick: (event) => onAddClick(event),
-                  },
-                  {
-                    icon: () => <Edit />,
-                    tooltip: "Edit Consult",
-                    onClick: (event, rowData) => onEditClick(event, rowData),
-                  },
-                  {
-                    icon: () => <DeleteOutline />,
-                    tooltip: "Delete Consult",
-                    onClick: (event, rowData) => onDeleteClick(event, rowData),
-                  },
-                ]}
+                actions={
+                  name === "admin" && name !== null
+                    ? [
+                        {
+                          icon: () => <AddBox />,
+                          tooltip: "Send Consult",
+                          isFreeAction: true,
+                          onClick: (event) => onAddClick(event),
+                        },
+                        {
+                          icon: () => <Edit />,
+                          tooltip: "Edit Consult",
+                          onClick: (event, rowData) =>
+                            onEditClick(event, rowData),
+                        },
+                        {
+                          icon: () => <DeleteOutline />,
+                          tooltip: "Delete Consult",
+                          onClick: (event, rowData) =>
+                            onDeleteClick(event, rowData),
+                        },
+                      ]
+                    : null
+                }
               />
             </CardBody>
           </Card>
@@ -147,7 +155,7 @@ const Consults = ({
 Consults.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  consults: state.consults,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

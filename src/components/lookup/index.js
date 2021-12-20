@@ -10,7 +10,7 @@ import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../shared/icons";
 
-const Lookup = ({ history, getLookups, deleteLookup, users: { datas } }) => {
+const Lookup = ({ history, getLookups, deleteLookup, lookup }) => {
   useEffect(() => {
     getLookups();
   }, [getLookups]);
@@ -74,7 +74,7 @@ const Lookup = ({ history, getLookups, deleteLookup, users: { datas } }) => {
                   { title: "Name", field: "name" },
                   { title: "Value", field: "value" },
                 ]}
-                data={datas}
+                data={lookup}
                 title="Lookup datas"
                 actions={[
                   {
@@ -106,7 +106,7 @@ const Lookup = ({ history, getLookups, deleteLookup, users: { datas } }) => {
 Lookup.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  lookup: state.lookup.lookups,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

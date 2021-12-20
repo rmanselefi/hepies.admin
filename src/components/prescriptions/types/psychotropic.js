@@ -50,16 +50,7 @@ const PsychotropicPrescriptions = ({
                 isLoading={false}
                 columns={[
                   { title: "#", render: (rowData) => rowData.tableData.id + 1 },
-                  {
-                    title: "Prescribed By",
-                    render: (patient) => {
-                      return `${patient.professional}`;
-                    },
-                    customFilterAndSearch: (term, patient) =>
-                      `${patient.professional}`
-                        .toLowerCase()
-                        .includes(term.toLowerCase()),
-                  },
+                  { title: "Code", field: "code" },
                   {
                     title: "Patient",
                     render: (patient) => {
@@ -69,6 +60,10 @@ const PsychotropicPrescriptions = ({
                       `${patient.patient?.name} ${patient.patient?.fathername}`
                         .toLowerCase()
                         .includes(term.toLowerCase()),
+                  },
+                  {
+                    title: "Wt",
+                    field: "patient.weight",
                   },
                   {
                     title: "Phone Number",
@@ -81,14 +76,38 @@ const PsychotropicPrescriptions = ({
                         .includes(term.toLowerCase()),
                   },
                   {
-                    title: "Drug",
-                    render: (row) => {
-                      return `${row.drug?.name} , ${row.drug?.strength}${row.drug?.unit}`;
+                    title: "Prescribed By",
+                    render: (patient) => {
+                      return `${patient.profession} `;
                     },
+                    customFilterAndSearch: (term, patient) =>
+                      `${patient.professional}`
+                        .toLowerCase()
+                        .includes(term.toLowerCase()),
                   },
-                  { title: "Code", field: "code" },
-                  { title: "Take in", field: "takein" },
-                  { title: "Frequency", field: "frequency" },
+
+                  {
+                    title: "Sent Date",
+                    render: (patient) => {
+                      return `${patient.createdAt}`;
+                    },
+                    customFilterAndSearch: (term, patient) =>
+                      `${patient.professional}`
+                        .toLowerCase()
+                        .includes(term.toLowerCase()),
+                  },
+                  {
+                    title: "Status",
+                    field: "status",
+                  },
+                  {
+                    title: "Read by",
+                    field: "readby",
+                  },
+                  {
+                    title: "Read Date",
+                    field: "readDate",
+                  },
                 ]}
                 data={psychoPrescriptions}
                 title="Psychotropic Prescriptions"

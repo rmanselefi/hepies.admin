@@ -15,7 +15,7 @@ const Vouchers = ({
   history,
   getVouchers,
   deleteVoucher,
-  users: { datas },
+  vouchers
 }) => {
   useEffect(() => {
     getVouchers();
@@ -81,7 +81,7 @@ const Vouchers = ({
                   { title: "Amount", field: "amount" },
                   { title: "Status", field: "status" },
                 ]}
-                data={datas}
+                data={vouchers}
                 title="Vouchers"
                 actions={[
                   {
@@ -113,7 +113,7 @@ const Vouchers = ({
 Vouchers.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  vouchers: state.vouchers.vouchers,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

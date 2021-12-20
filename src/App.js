@@ -26,7 +26,7 @@ const App = () => {
         <Switch>
           <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-          <Redirect to="/admin/dashboard" />
+          <Redirect from="/" to="/admin/dashboard" />
         </Switch>
       </BrowserRouter>
     </Provider>

@@ -10,7 +10,7 @@ import Edit from "@material-ui/icons/Edit";
 import icons from "../shared/icons";
 import swal from "sweetalert";
 
-const Roles = ({ getRoles, history, deleteRole, users: { datas } }) => {
+const Roles = ({ getRoles, history, deleteRole, roles }) => {
   useEffect(() => {
     getRoles();
   }, [getRoles]);
@@ -72,8 +72,8 @@ const Roles = ({ getRoles, history, deleteRole, users: { datas } }) => {
                   { title: "#", render: (rowData) => rowData.tableData.id + 1 },
                   { title: "Name", field: "name" },
                 ]}
-                data={datas}
-                title="Lookup datas"
+                data={roles}
+                title="Roles data"
                 actions={[
                   {
                     icon: () => <AddBox />,
@@ -104,7 +104,7 @@ const Roles = ({ getRoles, history, deleteRole, users: { datas } }) => {
 Roles.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  roles: state.roles.roles,
   auth: state.auth,
 });
 

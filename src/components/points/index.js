@@ -11,7 +11,7 @@ import { withRouter } from "react-router";
 import icons from "../shared/icons";
 import { getPoints, deletePoint } from "../../store/actions/points";
 
-const Points = ({ history, getPoints,deletePoint, users: { datas } }) => {
+const Points = ({ history, getPoints,deletePoint, points }) => {
   useEffect(() => {
     getPoints();
   }, [getPoints]);
@@ -75,7 +75,7 @@ const Points = ({ history, getPoints,deletePoint, users: { datas } }) => {
                   { title: "When", field: "when" },
                   { title: "To", field: "to" },
                 ]}
-                data={datas}
+                data={points}
                 title="Patients"
                 actions={[
                   {
@@ -108,7 +108,7 @@ const Points = ({ history, getPoints,deletePoint, users: { datas } }) => {
 Points.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  points: state.points.points,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

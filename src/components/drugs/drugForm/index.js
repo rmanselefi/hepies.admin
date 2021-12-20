@@ -33,7 +33,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
       setFormData({
         id: state.detail.id,
         name: state.detail.name,
-        category: state.detail.category,
+        category: state.detail.type,
         strength: state.detail.strength,
         unit: state.detail.unit,
         description: state.detail.about,
@@ -67,7 +67,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
         <Col md="12">
           <Card className="card-user">
             <CardHeader>
-              <CardTitle tag="h5">Add Patient</CardTitle>
+              <CardTitle tag="h5">Change Drug Data</CardTitle>
             </CardHeader>
             <CardBody>
               <AvForm onValidSubmit={hadleSubmit}>
@@ -152,11 +152,11 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
                   </Col>
                 </Row>
                 <Row>
-                  <div className="update ml-auto mr-auto">
+                  <Col>
                     <Button className="btn-round" color="primary" type="submit">
-                      Register Drug
+                      Save Drug
                     </Button>
-                  </div>
+                  </Col>
                 </Row>
               </AvForm>
             </CardBody>

@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA } from "./types";
+import {
+  GET_PATIENTS,  
+  PATIENT_ERROR,
+  ADD_PATIENT,
+  UPDATE_PATIENT,
+  DELETE_PATIENT,
+} from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
 
@@ -12,12 +18,12 @@ export const getPatients = () => async (dispatch) => {
     console.log(res.data);
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_PATIENTS,
       payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: PATIENT_ERROR,
       payload: {
         msg: error,
         status: error,
@@ -26,7 +32,7 @@ export const getPatients = () => async (dispatch) => {
   }
 };
 
-//Add Post
+//Add Patient
 export const addPatient = (formData) => async (dispatch) => {
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
@@ -42,12 +48,12 @@ export const addPatient = (formData) => async (dispatch) => {
       return res.data;
     }
     dispatch({
-      type: ADD_USER,
-      payload: res.data,
+      type: ADD_PATIENT,
+      payload: formData,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: PATIENT_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -57,7 +63,7 @@ export const addPatient = (formData) => async (dispatch) => {
   }
 };
 
-//Add Post
+//Add Patient
 export const updatePatient = (formData) => async (dispatch) => {
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
@@ -77,12 +83,12 @@ export const updatePatient = (formData) => async (dispatch) => {
       return res.data;
     }
     dispatch({
-      type: ADD_USER,
-      payload: res.data,
+      type: UPDATE_PATIENT,
+      payload: formData,
     });
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: PATIENT_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
@@ -95,18 +101,16 @@ export const updatePatient = (formData) => async (dispatch) => {
 //DELETE PATIENT
 export const deletePatient = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(apiUrl + `/patient/${id}`);
-    console.log("====================================");
-    console.log(res.data);
-    console.log("====================================");
+    await axios.delete(apiUrl + `/patient/${id}`);
+
     dispatch({
-      type: DELETE_DATA,
+      type: DELETE_PATIENT,
       payload: id,
     });
     return id;
   } catch (error) {
     dispatch({
-      type: POST_ERROR,
+      type: PATIENT_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,

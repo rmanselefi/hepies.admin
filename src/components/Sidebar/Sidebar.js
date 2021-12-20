@@ -10,7 +10,6 @@ import { withRouter } from "react-router";
 import { loadUser } from "../../store/actions/auth";
 import store from "../../store/store";
 
-
 var ps;
 
 function Sidebar(props) {
@@ -20,9 +19,8 @@ function Sidebar(props) {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
   React.useEffect(() => {
-   
-      store.dispatch(loadUser());
-   
+    store.dispatch(loadUser());
+
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(sidebar.current, {
         suppressScrollX: true,
@@ -34,7 +32,7 @@ function Sidebar(props) {
         ps.destroy();
       }
     };
-  },[]);
+  }, []);
   const { user } = props;
   return (
     <div
@@ -62,6 +60,24 @@ function Sidebar(props) {
         <Nav>
           {props.routes.map((prop, key) => {
             return prop.show && user?.role.name === "admin" ? (
+              <li
+                className={
+                  activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
+                }
+                key={key}
+              >
+                <NavLink
+                  to={prop.layout + prop.path}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <i className={prop.icon} />
+                  <p>{prop.name}</p>
+                </NavLink>
+              </li>
+            ) : prop.show &&
+              user?.role.name === "customer_service" &&
+              !["Vouchers", "Points", "Lookup", "Roles"].includes(prop.name) ? (
               <li
                 className={
                   activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
