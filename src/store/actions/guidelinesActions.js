@@ -6,7 +6,7 @@ import {
   DELETE_GUIDELINE,
 } from "./types";
 import axios from "axios";
-import { apiUrl, localUrl } from "./constant";
+import { apiUrl } from "./constant";
 import setAuthToken from "../../components/utils/setAuthToken";
 
 export const getGuidelines = () => async (dispatch) => {

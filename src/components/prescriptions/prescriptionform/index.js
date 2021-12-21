@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
     Button,
     Card,
     CardHeader,
     CardBody,
-    CardFooter,
     CardTitle,
     FormGroup,
     Form,
@@ -13,8 +12,7 @@ import {
     Col,
   } from "reactstrap";
 
-const PrescriptionForm = ({}) => {
-
+const PrescriptionForm = () => {
     return (
         <div className="content">
             <Row>

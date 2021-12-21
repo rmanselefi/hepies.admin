@@ -25,6 +25,8 @@ import voucherform from "components/voucher/voucherform";
 import mypharmacy from "components/pharmacy/mypharmacy";
 import userHistory from "components/users/userHistory/userHistory";
 import prescriptionPaper from "components/prescriptions/prescriptionPaper";
+import myPharmacies from "components/pharmacy/myPharmacies";
+import pharmacistProfile from "components/pharmacy/pharmacistProfile/pharmacistProfile";
 
 var routes = [
   {
@@ -123,6 +125,20 @@ var routes = [
   {
     path: "/pharmacy/mypharmacy",
     component: mypharmacy,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/pharmacy/search",
+    component: myPharmacies,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/pharmacy/profile",
+    component: pharmacistProfile,
     layout: "/admin",
     show: false,
   },

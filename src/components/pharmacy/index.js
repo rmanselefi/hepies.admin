@@ -1,38 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getPharmacists, deleteDrug } from "../../store/actions/pharmacy";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
-import AddBox from "@material-ui/icons/AddBox";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import Edit from "@material-ui/icons/Edit";
-import swal from "sweetalert";
 
-import { Card, CardBody, Row, Col, NavLink, Button } from "reactstrap";
+import { Card, CardBody, Row, Col, Button, FormGroup } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../shared/icons";
+import { AvField, AvForm } from "availity-reactstrap-validation";
 
-const Pharmacy = ({
-  history,
-  getPharmacists,
-  deleteDrug,
-  pharmacies,
-}) => {
+const Pharmacy = ({ history, getPharmacists, deleteDrug, pharmacies }) => {
   useEffect(() => {
     getPharmacists();
   }, [getPharmacists]);
 
-  const onAddClick = (e) => {
-    e.preventDefault();
-    history.push("/admin/drug/add");
-  };
-
-  const onEditClick = (e, row) => {
-    e.preventDefault();
-    history.push({
-      pathname: "/admin/drug/edit",
-      state: { detail: row },
-    });
-  };
+  const [name, setName] = useState("");
 
   const onMyPharmacyClick = (e, row) => {
     e.preventDefault();
@@ -42,33 +24,56 @@ const Pharmacy = ({
     });
   };
 
-  const onDeleteClick = async (e, row) => {
+  const onSearchClick = (e, name) => {
     e.preventDefault();
-    const willDelete = await swal({
-      title: "Are you sure?",
-      text: "Are you sure that you want to delete this?",
-      icon: "warning",
-      dangerMode: true,
-      buttons: {
-        cancel: "Cancel",
-        ok: {
-          text: "Yes",
-        },
-      },
+    history.push({
+      pathname: "/admin/pharmacy/search",
+      state: { name },
     });
-
-    if (willDelete) {
-      const res = await deleteDrug(row.id);
-      if (res != null) {
-        swal("Deleted!", "Your Pharmacy data has been deleted!", "success");
-      }
-    }
   };
 
   return (
     <div className="content">
       <Row>
         <Col md="12">
+          <AvForm>
+            <Row>
+              <Col className="pr-1" md="6">
+                <FormGroup>
+                  <label>Drug Name</label>
+                  <AvField
+                    placeholder="Drug Name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                    name="name"
+                    required
+                  />
+                </FormGroup>
+              </Col>
+              <Col
+                className="pr-1"
+                md="6"
+                style={{
+                  position: "relative",
+                  top: "21px",
+                }}
+              >
+                <label></label>
+                <Button
+                  className="btn-round"
+                  color="primary"
+                  type="button"
+                  disabled={!name}
+                  onClick={(e) => onSearchClick(e, name)}
+                >
+                  Search My Pharmacy
+                </Button>
+              </Col>
+            </Row>
+          </AvForm>
           <Card>
             <CardBody>
               <MaterialTable
@@ -92,12 +97,16 @@ const Pharmacy = ({
                     title: "Pharmacy/ist Name",
                     render: (patient) => {
                       return (
-                        <NavLink
+                        <Link
                           title={`${patient?.name} ${patient?.fathername}`}
+                          to={{
+                            pathname: "/admin/pharmacy/profile",
+                            state: { detail: patient },
+                          }}
                           style={{
                             cursor: "pointer",
                           }}
-                        >{`${patient?.name} ${patient?.fathername}`}</NavLink>
+                        >{`${patient?.name} ${patient?.fathername}`}</Link>
                       );
                     },
                     customFilterAndSearch: (term, patient) =>

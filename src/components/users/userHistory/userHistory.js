@@ -2,19 +2,13 @@ import React, { useEffect } from "react";
 import { getUserHistory } from "../../../store/actions/user";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
-import AddBox from "@material-ui/icons/AddBox";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import Edit from "@material-ui/icons/Edit";
-import swal from "sweetalert";
 
-import { Card, CardBody, Row, Col, NavLink, Button } from "reactstrap";
+import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../../shared/icons";
 
 const UserHistory = ({
-  history,
   getUserHistory,
-
   location,
   users: { datas },
 }) => {
@@ -25,41 +19,6 @@ const UserHistory = ({
   useEffect(() => {
     getUserHistory(id, type);
   }, [getUserHistory, id, type]);
-
-  const onAddClick = (e) => {
-    e.preventDefault();
-    history.push("/admin/drug/add");
-  };
-
-  const onEditClick = (e, row) => {
-    e.preventDefault();
-    history.push({
-      pathname: "/admin/drug/edit",
-      state: { detail: row },
-    });
-  };
-//   const onDeleteClick = async (e, row) => {
-//     e.preventDefault();
-//     const willDelete = await swal({
-//       title: "Are you sure?",
-//       text: "Are you sure that you want to delete this?",
-//       icon: "warning",
-//       dangerMode: true,
-//       buttons: {
-//         cancel: "Cancel",
-//         ok: {
-//           text: "Yes",
-//         },
-//       },
-//     });
-
-//     if (willDelete) {
-//       const res = await deleteDrug(row.id);
-//       if (res != null) {
-//         swal("Deleted!", "Your Pharmacy data has been deleted!", "success");
-//       }
-//     }
-//   };
 
   return (
     <div className="content">
@@ -83,7 +42,7 @@ const UserHistory = ({
                 }}
                 isLoading={false}
                 columns={[
-                    { title: "#", render: (rowData) => rowData.tableData.id + 1 },
+                  { title: "#", render: (rowData) => rowData.tableData.id + 1 },
                   {
                     title: "Prescribed By",
                     render: (patient) => {

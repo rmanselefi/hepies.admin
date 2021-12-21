@@ -1,26 +1,32 @@
 import React, { useEffect } from "react";
-import { getMyPharmacyById, deleteDrug } from "../../../store/actions/pharmacy";
+import { getPharmacies, deleteDrug } from "../../../store/actions/pharmacy";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
 
-import { Card, CardBody, Row, Col } from "reactstrap";
+import { Card, CardBody, Row, Col, FormGroup } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../../shared/icons";
 
-const MyPharmacy = ({
+const MyPharmacies = ({
   history,
-  getPharmacists,
-  getMyPharmacyById,
+  getPharmacies,
   deleteDrug,
   location,
   pharmacies,
 }) => {
+  useEffect(() => {
+    getPharmacies();
+  }, [getPharmacies]);
+
   const { state } = location;
 
-  const id = state.detail.id;
-  useEffect(() => {
-    getMyPharmacyById(id);
-  }, [getMyPharmacyById, id]);
+  const name = state?.name;
+  const searchResult =
+    pharmacies &&
+    pharmacies?.filter((pharma) => {
+      return pharma.drug_name?.includes(name);
+    });
+  console.log(searchResult);
 
   return (
     <div className="content">
@@ -45,29 +51,17 @@ const MyPharmacy = ({
                 isLoading={false}
                 columns={[
                   { title: "#", render: (rowData) => rowData.id + 1 },
+                  {
+                    title: "Pharmacy/ist Name",
+                    render: (data) => {
+                      return `${data.profession.name} ${data.profession.fathername}`;
+                    },
+                  },
                   { title: "Drug Name", field: "drug_name" },
                   { title: "Price", field: "price" },
                 ]}
-                data={pharmacies}
-                title={"My Pharmacy for " + state.detail.name}
-                // actions={[
-                //   {
-                //     icon: () => <AddBox />,
-                //     tooltip: "Add Drug",
-                //     isFreeAction: true,
-                //     onClick: (event) => onAddClick(event),
-                //   },
-                //   {
-                //     icon: () => <Edit />,
-                //     tooltip: "Edit Drug",
-                //     onClick: (event, rowData) => onEditClick(event, rowData),
-                //   },
-                //   {
-                //     icon: () => <DeleteOutline />,
-                //     tooltip: "Delete Drug",
-                //     onClick: (event, rowData) => onDeleteClick(event, rowData),
-                //   },
-                // ]}
+                data={searchResult}
+                title={"My Pharmacy"}
               />
             </CardBody>
           </Card>
@@ -77,13 +71,13 @@ const MyPharmacy = ({
   );
 };
 
-MyPharmacy.propTypes = {};
+MyPharmacies.propTypes = {};
 
 const mapStateToProps = (state) => ({
   pharmacies: state.pharmacy.pharmacies,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {
-  getMyPharmacyById,
+  getPharmacies,
   deleteDrug,
-})(withRouter(MyPharmacy));
+})(withRouter(MyPharmacies));

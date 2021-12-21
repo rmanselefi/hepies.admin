@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DATAS, POST_ERROR, ADD_USER, DELETE_DATA, GET_PHARMACY } from "./types";
+import { POST_ERROR, ADD_USER, DELETE_DATA, GET_PHARMACY } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
 
@@ -149,10 +149,8 @@ export const updateDrug = (formData) => async (dispatch) => {
 //DELETE PATIENT
 export const deleteDrug = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(apiUrl + `/pharmacy/${id}`);
-    console.log("====================================");
-    console.log(res.data);
-    console.log("====================================");
+    await axios.delete(apiUrl + `/pharmacy/${id}`);
+
     dispatch({
       type: DELETE_DATA,
       payload: id,

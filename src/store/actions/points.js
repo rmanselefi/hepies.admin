@@ -1,9 +1,5 @@
 import axios from "axios";
 import {
-  GET_DATAS,
-  POST_ERROR,
-  ADD_USER,
-  DELETE_DATA,
   GET_POINTS,
   POINT_ERROR,
   ADD_POINT,

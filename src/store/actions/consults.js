@@ -3,8 +3,6 @@ import firebase from "../../components/config/firebase";
 import {
   GET_CONSULTS,
   POST_ERROR,
-  ADD_USER,
-  DELETE_DATA,
   ADD_CONSULT,
   CONSULT_ERROR,
   DELETE_CONSULT,
@@ -71,7 +69,7 @@ export const addConsult = (formData) => async (dispatch) => {
             .getDownloadURL()
             .then(async (urls) => {
               if (urls != null) {
-                const formData = {
+                const formUpdateData = {
                   topic: formData.topic,
                   image: urls,
                 };
@@ -83,7 +81,7 @@ export const addConsult = (formData) => async (dispatch) => {
 
                 const res = await axios.post(
                   apiUrl + "/consulting",
-                  formData,
+                  formUpdateData,
                   config
                 );
                 if (res.data != null) {
@@ -91,7 +89,7 @@ export const addConsult = (formData) => async (dispatch) => {
                 }
                 dispatch({
                   type: ADD_CONSULT,
-                  payload: res.data,
+                  payload: formUpdateData,
                 });
               }
             });
@@ -208,7 +206,7 @@ export const updateConsult = (formData, isUrl) => async (dispatch) => {
 //DELETE CONSULT
 export const deleteConsult = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(apiUrl + `/consulting/${id}`);
+    await axios.delete(apiUrl + `/consulting/${id}`);
     dispatch({
       type: DELETE_CONSULT,
       payload: id,
