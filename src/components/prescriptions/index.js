@@ -1,14 +1,22 @@
 import React, { useEffect } from "react";
-import { getPrescriptions } from "../../store/actions/prescriptions";
+import { getPrescriptions, resend } from "../../store/actions/prescriptions";
 import { connect } from "react-redux";
 import Edit from "@material-ui/icons/RemoveRedEyeOutlined";
+import SendIcon from "@material-ui/icons/Send";
+
 import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
 import MaterialTable from "material-table";
 import icons from "../shared/icons";
 import moment from "moment";
+import swal from "sweetalert";
 
-const Prescriptions = ({ getPrescriptions, prescriptions, history }) => {
+const Prescriptions = ({
+  getPrescriptions,
+  prescriptions,
+  history,
+  resend,
+}) => {
   useEffect(() => {
     getPrescriptions();
   }, [getPrescriptions]);
@@ -19,6 +27,18 @@ const Prescriptions = ({ getPrescriptions, prescriptions, history }) => {
       pathname: "/admin/prescription/view",
       state: { detail: row },
     });
+  };
+  const onResendClick = async (e, row) => {
+    const res = await resend(row.id);
+    if (res) {
+      swal(
+        "Sent!",
+        "Prescription is successfully resent to the patient!",
+        "success"
+      );
+    } else {
+      swal("Error!", "Unable to resend prescription", "error");
+    }
   };
 
   return (
@@ -92,6 +112,14 @@ const Prescriptions = ({ getPrescriptions, prescriptions, history }) => {
                         .includes(term.toLowerCase()),
                   },
                   {
+                    title: "Dx",
+                    field: "diagnosis",
+                  },
+                  {
+                    title: "Remark",
+                    field: "remark",
+                  },
+                  {
                     title: "Status",
                     field: "status",
                   },
@@ -107,6 +135,19 @@ const Prescriptions = ({ getPrescriptions, prescriptions, history }) => {
                         : moment(patient.readDate).format("MM/DD/YYYY");
                     },
                   },
+
+                  {
+                    title: "Resend",
+                    render: (patient) => {
+                      return (
+                        <div>
+                          <SendIcon
+                            onClick={(e) => onResendClick(e, patient)}
+                          />
+                        </div>
+                      );
+                    },
+                  },
                 ]}
                 data={prescriptions}
                 title="Prescriptions"
@@ -114,8 +155,7 @@ const Prescriptions = ({ getPrescriptions, prescriptions, history }) => {
                   {
                     icon: () => <Edit />,
                     tooltip: "View Prescription Paper",
-                    onClick: (event, rowData) =>onClick(event, rowData)
-                      
+                    onClick: (event, rowData) => onClick(event, rowData),
                   },
                 ]}
               />
@@ -134,4 +174,5 @@ const mapStateToProps = (state) => ({
 });
 export default connect(mapStateToProps, {
   getPrescriptions,
+  resend,
 })(withRouter(Prescriptions));

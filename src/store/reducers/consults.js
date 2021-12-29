@@ -4,9 +4,13 @@ import {
   DELETE_CONSULT,
   CONSULT_ERROR,
   UPDATE_CONSULT,
+  GET_COMMENTS,
+  GET_LIKES
 } from "../actions/types";
 const initialState = {
   consults: [],
+  comments: [],
+  likes:[],
   consult: null,
   loading: true,
   error: {},
@@ -21,6 +25,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         consults: payload,
+        loading: false,
+      };
+    case GET_COMMENTS:
+      return {
+        ...state,
+        comments: payload,
+        loading: false,
+      };
+    case GET_LIKES:
+      return {
+        ...state,
+        likes: payload,
         loading: false,
       };
     case ADD_CONSULT:

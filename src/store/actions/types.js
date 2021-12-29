@@ -33,6 +33,9 @@ export const DELETE_CONSULT = "DELETE_CONSULT";
 export const UPDATE_CONSULT = "UPDATE_CONSULT";
 export const CONSULT_ERROR = "CONSULT_ERROR";
 
+export const GET_COMMENTS = "GET_COMMENTS";
+export const GET_LIKES= "GET_LIKES";
+
 //Drugs
 export const GET_DRUGS = "GET_DRUGS";
 export const ADD_DRUG = "ADD_DRUG";
@@ -40,12 +43,15 @@ export const DELETE_DRUG = "DELETE_DRUG";
 export const UPDATE_DRUG = "UPDATE_DRUG";
 export const DRUG_ERROR = "DRUG_ERROR";
 
+export const GET_INSTRUMENT = "GET_INSTRUMENT";
+
 //Guidelines
 export const GET_GUIDELINES = "GET_GUIDELINES";
 export const ADD_GUIDELINE = "ADD_GUIDELINE";
 export const DELETE_GUIDELINE = "DELETE_GUIDELINE";
 export const UPDATE_GUIDELINE = "UPDATE_GUIDELINE";
 export const GUIDELINE_ERROR = "DRUG_ERROR";
+export const LOADING_TOGGLE = "LOADING_TOGGLE"
 
 //lookups
 export const GET_LOOKUPS = "GET_LOOKUPS";
@@ -79,6 +85,7 @@ export const POINT_ERROR = "POINT_ERROR";
 export const GET_PRESCRIPTIONS = "GET_PRESCRIPTIONS";
 export const GET_PRESCRIPTION_PAPER = "GET_PRESCRIPTION_PAPER";
 export const PRES_ERROR = "PRES_ERROR";
+export const RESEND = "RESEND";
 
 //Roles
 export const GET_ROLES = "GET_ROLES";

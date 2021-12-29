@@ -96,7 +96,10 @@ const Patients = ({
                   { title: "Age", field: "age" },
                   { title: "Sex", field: "sex" },
                   { title: "Weight", field: "weight" },
+                  { title: "Phone", field: "phone" },
+                  { title: "Address", field: "address" },
                 ]}
+                
                 data={patients}
                 title="Patients"
                 actions={[

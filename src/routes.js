@@ -27,6 +27,10 @@ import userHistory from "components/users/userHistory/userHistory";
 import prescriptionPaper from "components/prescriptions/prescriptionPaper";
 import myPharmacies from "components/pharmacy/myPharmacies";
 import pharmacistProfile from "components/pharmacy/pharmacistProfile/pharmacistProfile";
+import instruments from "components/instruments";
+import instrumentForm from "components/instruments/instrumentForm";
+import comments from "components/consulting/comments/comments";
+import likes from "components/consulting/likes/likes";
 
 var routes = [
   {
@@ -176,6 +180,28 @@ var routes = [
     show: false,
   },
 
+
+  {
+    path: "/instruments",
+    name: "Instruments",
+    icon: "nc-icon nc-single-02",
+    component: instruments,
+    layout: "/admin",
+    show: true,
+  },
+  {
+    path: "/instrument/add",
+    component: instrumentForm,
+    layout: "/admin",
+    show: false,
+  },
+  {
+    path: "/instrument/edit",
+    component: instrumentForm,
+    layout: "/admin",
+    show: false,
+  },
+
   {
     path: "/guidelines",
     name: "Guidelines",
@@ -236,6 +262,19 @@ var routes = [
   {
     path: "/consult/edit",
     component: consultForm,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/consult/comments",
+    component: comments,
+    layout: "/admin",
+    show: false,
+  },
+  {
+    path: "/consult/likes",
+    component: likes,
     layout: "/admin",
     show: false,
   },

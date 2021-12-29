@@ -10,6 +10,7 @@ import {
   Input,
   Row,
   Col,
+  CustomInput
 } from "reactstrap";
 import { connect } from "react-redux";
 import { addConsult, updateConsult } from "../../../store/actions/consults";
@@ -88,7 +89,7 @@ const ConsultForm = ({ addConsult, updateConsult, location }) => {
                   </Col>
                   <Col className="px-1" md="3">
                     <label>Image</label>
-                    <input
+                    <CustomInput
                       accept="image/*"
                       id="contained-button-file"
                       multiple

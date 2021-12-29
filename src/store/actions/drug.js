@@ -5,6 +5,7 @@ import {
   ADD_DRUG,
   UPDATE_DRUG,
   DELETE_DRUG,
+  GET_INSTRUMENT
 } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
@@ -19,6 +20,30 @@ export const getDrugs = () => async (dispatch) => {
 
     dispatch({
       type: GET_DRUGS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DRUG_ERROR,
+      payload: {
+        msg: error,
+        status: error,
+      },
+    });
+  }
+};
+
+
+export const getInstruments = () => async (dispatch) => {
+  try {
+    if (localStorage.getItem("token")) {
+      setAuthToken(localStorage.getItem("token"));
+    }
+    const res = await axios.get(apiUrl + "/drugs/instrument");
+    console.log(res.data);
+
+    dispatch({
+      type: GET_INSTRUMENT,
       payload: res.data,
     });
   } catch (error) {

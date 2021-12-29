@@ -4,11 +4,12 @@ import {
   DELETE_GUIDELINE,
   GUIDELINE_ERROR,
   UPDATE_GUIDELINE,
+  LOADING_TOGGLE,
 } from "../actions/types";
 const initialState = {
   guidelines: [],
   guideline: null,
-  loading: true,
+  loading: false,
   error: {},
 };
 
@@ -35,6 +36,11 @@ export default function (state = initialState, action) {
         guidelines: state.guidelines.filter((post) => post.id !== payload),
         loading: false,
       };
+    case LOADING_TOGGLE:
+      return {
+        ...state,
+        loading: payload
+      }
     case GUIDELINE_ERROR:
       return {
         ...state,

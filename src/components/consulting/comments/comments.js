@@ -1,27 +1,30 @@
 import React, { useEffect } from "react";
-import { getConsults, deleteConsult } from "../../store/actions/consults";
+import { getCommentForConsult, deleteConsult } from "../../../store/actions/consults";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
-import AddBox from "@material-ui/icons/AddBox";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import Edit from "@material-ui/icons/Edit";
 import swal from "sweetalert";
 
-import { Card, CardBody, Row, Col, Button } from "reactstrap";
+import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
-import icons from "../shared/icons";
+import icons from "../../shared/icons";
 import moment from "moment";
 
-const Consults = ({
+const Comments = ({
   history,
-  getConsults,
+  location,
+  getCommentForConsult,
   deleteConsult,
-  consults: { consults },
+  comments,
   auth: { user },
 }) => {
+  const {
+    state: { detail },
+  } = location;
+  const id = detail.id;
+
   useEffect(() => {
-    getConsults();
-  }, [getConsults]);
+    getCommentForConsult(id);
+  }, [getCommentForConsult,id]);
   const name = user != null ? user?.role.name : null;
 
   const onAddClick = (e) => {
@@ -36,23 +39,6 @@ const Consults = ({
       state: { detail: row },
     });
   };
-
-  const onCommentsClick = (e, row) => {
-    e.preventDefault();
-    history.push({
-      pathname: "/admin/consult/comments",
-      state: { detail: row },
-    });
-  };
-
-  const onLikesClick = (e, row) => {
-    e.preventDefault();
-    history.push({
-      pathname: "/admin/consult/likes",
-      state: { detail: row },
-    });
-  };
-
   const onDeleteClick = async (e, row) => {
     e.preventDefault();
     const willDelete = await swal({
@@ -108,7 +94,10 @@ const Consults = ({
                       width: "10px",
                     },
                   },
-                  { title: "Topic", field: "topic" },
+                  {
+                    title:"Username", field: "user.username"
+                  },
+                  { title: "Comment", field: "comment" },
                   {
                     title: "Image",
                     render: (row) => {
@@ -133,57 +122,33 @@ const Consults = ({
                         .toLowerCase()
                         .includes(term.toLowerCase()),
                   },
-                  {
-                    title: "Comments/Likes",
-                    render: (consult) => {
-                      return (
-                        <div>
-                          <Button
-                            onClick={(e) => onCommentsClick(e, consult)}
-                            color="info"
-                            size="sm"
-                          >
-                            Comments
-                          </Button>
-                          /
-                          <Button
-                            onClick={(e) => onLikesClick(e, consult)}
-                            color="info"
-                            size="sm"
-                          >
-                            Likes
-                          </Button>
-                        </div>
-                      );
-                    },
-                  },
                 ]}
-                data={consults}
-                title="Consult datas"
-                actions={
-                  name === "admin" && name !== null
-                    ? [
-                        {
-                          icon: () => <AddBox />,
-                          tooltip: "Send Consult",
-                          isFreeAction: true,
-                          onClick: (event) => onAddClick(event),
-                        },
-                        {
-                          icon: () => <Edit />,
-                          tooltip: "Edit Consult",
-                          onClick: (event, rowData) =>
-                            onEditClick(event, rowData),
-                        },
-                        {
-                          icon: () => <DeleteOutline />,
-                          tooltip: "Delete Consult",
-                          onClick: (event, rowData) =>
-                            onDeleteClick(event, rowData),
-                        },
-                      ]
-                    : null
-                }
+                data={comments}
+                title="Comment Data"
+                // actions={
+                //   // name === "admin" && name !== null
+                //   //   ? [
+                //   //       {
+                //   //         icon: () => <AddBox />,
+                //   //         tooltip: "Send Consult",
+                //   //         isFreeAction: true,
+                //   //         onClick: (event) => onAddClick(event),
+                //   //       },
+                //   //       {
+                //   //         icon: () => <Edit />,
+                //   //         tooltip: "Edit Consult",
+                //   //         onClick: (event, rowData) =>
+                //   //           onEditClick(event, rowData),
+                //   //       },
+                //   //       {
+                //   //         icon: () => <DeleteOutline />,
+                //   //         tooltip: "Delete Consult",
+                //   //         onClick: (event, rowData) =>
+                //   //           onDeleteClick(event, rowData),
+                //   //       },
+                //   //     ]
+                //   //   : null
+                // }
               />
             </CardBody>
           </Card>
@@ -193,13 +158,13 @@ const Consults = ({
   );
 };
 
-Consults.propTypes = {};
+Comments.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  consults: state.consults,
+  comments: state.consults.comments,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {
-  getConsults,
+  getCommentForConsult,
   deleteConsult,
-})(withRouter(Consults));
+})(withRouter(Comments));

@@ -4,12 +4,17 @@ import {
   GUIDELINE_ERROR,
   ADD_GUIDELINE,
   DELETE_GUIDELINE,
+  LOADING_TOGGLE,
 } from "./types";
 import axios from "axios";
 import { apiUrl } from "./constant";
 import setAuthToken from "../../components/utils/setAuthToken";
 
 export const getGuidelines = () => async (dispatch) => {
+  dispatch({
+    type: LOADING_TOGGLE,
+    payload: true,
+  });
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
@@ -21,7 +26,15 @@ export const getGuidelines = () => async (dispatch) => {
       type: GET_GUIDELINES,
       payload: res.data,
     });
+    dispatch({
+      type: LOADING_TOGGLE,
+      payload: false,
+    });
   } catch (error) {
+    dispatch({
+      type: LOADING_TOGGLE,
+      payload: false,
+    });
     dispatch({
       type: GUIDELINE_ERROR,
       payload: {
@@ -36,7 +49,7 @@ export const saveGuideline = (guideline) => async (dispatch) => {
     if (guideline.image != null) {
       const uploadTask = firebase
         .storage()
-        .ref(`$guideline_images/${guideline.image.name}`)
+        .ref(`$guideline_files/${guideline.image.name}`)
         .put(guideline.image);
       uploadTask.on(
         "state_changed",
@@ -49,7 +62,7 @@ export const saveGuideline = (guideline) => async (dispatch) => {
           console.log(error);
         },
         () => {
-          var path = `$guideline_images`;
+          var path = `$guideline_files`;
           firebase
             .storage()
             .ref(path)
@@ -66,29 +79,12 @@ export const saveGuideline = (guideline) => async (dispatch) => {
                     "Content-Type": "application/json",
                   },
                 };
-                try {
-                  const res = await axios.post(
-                    apiUrl + "/guidelines",
-                    formData,
-                    config
-                  );
-                  if (res.data != null) {
-                    return res.data;
-                  }
-                  dispatch({
-                    type: ADD_GUIDELINE,
-                    payload: formData,
-                  });
-                } catch (error) {
-                  dispatch({
-                    type: GUIDELINE_ERROR,
-                    payload: {
-                      msg: error.response.statusText,
-                      status: error.response.status,
-                    },
-                  });
-                  return null;
-                }
+                await axios.post(apiUrl + "/guidelines", formData, config);
+
+                dispatch({
+                  type: ADD_GUIDELINE,
+                  payload: formData,
+                });
               }
             });
         }

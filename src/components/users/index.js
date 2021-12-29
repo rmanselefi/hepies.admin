@@ -23,6 +23,7 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Edit from "@material-ui/icons/Edit";
 import icons from "../shared/icons";
 import swal from "sweetalert";
+import moment from 'moment'
 
 const Users = ({
   history,
@@ -38,7 +39,6 @@ const Users = ({
   }, [getUsers]);
 
   const name = user != null ? user?.role.name : null;
-  
 
   const handleChange = async (event, row) => {
     event.preventDefault();
@@ -136,8 +136,22 @@ const Users = ({
                   },
                   { title: "Work Place", field: "workplace" },
                   { title: "Points", field: "points" },
+                  {
+                    title: "Overall Points",field: "overall_points"
+                  },
                   { title: "Phone", field: "phone" },
                   { title: "Email", field: "email" },
+                  {
+                    title: "Date",
+                    render: (patient) => {
+                      return moment(patient.createdAt).format("MM/DD/YYYY");
+                    },
+                    customFilterAndSearch: (term, patient) =>
+                      moment(patient.createdAt)
+                        .format("MM/DD/YYYY")
+                        .toLowerCase()
+                        .includes(term.toLowerCase()),
+                  },
                   {
                     title: "Practice License",
                     render: (row) => {

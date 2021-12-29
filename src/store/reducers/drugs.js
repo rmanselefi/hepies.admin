@@ -4,9 +4,11 @@ import {
   DELETE_DRUG,
   DRUG_ERROR,
   UPDATE_DRUG,
+  GET_INSTRUMENT,
 } from "../actions/types";
 const initialState = {
   drugs: [],
+  instruments: [],
   drug: null,
   loading: true,
   error: {},
@@ -21,6 +23,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         drugs: payload,
+        loading: false,
+      };
+    case GET_INSTRUMENT:
+      return {
+        ...state,
+        instruments: payload,
         loading: false,
       };
     case ADD_DRUG:

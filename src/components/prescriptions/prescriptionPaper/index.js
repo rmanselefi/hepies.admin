@@ -42,7 +42,7 @@ const PrescriptionPaper = ({
                       color: "grey",
                     }}
                   >
-                   Patient Name
+                    Patient Name
                   </span>
                   <br />
                   {state.detail.patient.name +
@@ -72,6 +72,18 @@ const PrescriptionPaper = ({
                   <br />
                   {state.detail.patient.professional}
                 </Col>
+
+                <Col>
+                  <span
+                    style={{
+                      color: "grey",
+                    }}
+                  >
+                    Age
+                  </span>
+                  <br />
+                  {state.detail.patient.age}
+                </Col>
                 <Col>
                   <span
                     style={{
@@ -84,7 +96,7 @@ const PrescriptionPaper = ({
                   {moment(state.detail.patient.createdAt).format("MM/DD/YYYY")}
                 </Col>
               </Row>
-              <br/>
+              <br />
               <MaterialTable
                 icons={icons}
                 options={{

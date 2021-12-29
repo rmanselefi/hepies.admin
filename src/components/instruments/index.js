@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getDrugs, deleteDrug } from "../../store/actions/drug";
+import { getInstruments, deleteDrug } from "../../store/actions/drug";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
@@ -11,21 +11,27 @@ import { Card, CardBody, Row, Col, Button } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../shared/icons";
 
-const Drug = ({ history, getDrugs, deleteDrug, drugs, auth: { user } }) => {
+const Instruments = ({
+  history,
+  getInstruments,
+  deleteDrug,
+  instruments,
+  auth: { user },
+}) => {
   useEffect(() => {
-    getDrugs();
-  }, [getDrugs]);
+    getInstruments();
+  }, [getInstruments]);
 
   const name = user != null ? user?.role.name : null;
   const onAddClick = (e) => {
     e.preventDefault();
-    history.push("/admin/drug/add");
+    history.push("/admin/instrument/add");
   };
 
   const onEditClick = (e, row) => {
     e.preventDefault();
     history.push({
-      pathname: "/admin/drug/edit",
+      pathname: "/admin/instrument/edit",
       state: { detail: row },
     });
   };
@@ -71,18 +77,23 @@ const Drug = ({ history, getDrugs, deleteDrug, drugs, auth: { user } }) => {
                 }}
                 isLoading={false}
                 columns={[
-                  { title: "#", render: (rowData) => rowData.id + 1 },               
-                  { title: "Name", field: "name" },
-                  { title: "Category", field: "type" },
-                  { title: "Strength", field: "strength" },
-                  { title: "Unit", field: "unit" },
+                  { title: "#", render: (rowData) => rowData.id + 1 },
                   {
-                    title: "Prescription number",
-                    field: "number_prescription",
+                    title: "Type",
+                    field: "type",
                   },
+                  { title: "Material Name", field: "material_name" },
+                  {
+                    title: "Size",
+                    render: (rowData) => {
+                      let data = rowData.size;
+                      return data;
+                    },
+                  },
+                  { title: "How Many", field: "how_many" },
                 ]}
-                data={drugs}
-                title="Drug datas"
+                data={instruments}
+                title="Instrument datas"
                 actions={[
                   {
                     icon: () => <AddBox />,
@@ -113,13 +124,13 @@ const Drug = ({ history, getDrugs, deleteDrug, drugs, auth: { user } }) => {
   );
 };
 
-Drug.propTypes = {};
+Instruments.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  drugs: state.drugs.drugs,
+  instruments: state.drugs.instruments,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {
-  getDrugs,
+  getInstruments,
   deleteDrug,
-})(withRouter(Drug));
+})(withRouter(Instruments));

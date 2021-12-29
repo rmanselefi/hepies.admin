@@ -1,5 +1,10 @@
 import axios from "axios";
-import { PRES_ERROR, GET_PRESCRIPTIONS, GET_PRESCRIPTION_PAPER } from "./types";
+import {
+  PRES_ERROR,
+  GET_PRESCRIPTIONS,
+  GET_PRESCRIPTION_PAPER,
+  RESEND,
+} from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
 
@@ -23,6 +28,39 @@ export const getPrescriptions = () => async (dispatch) => {
         status: error.response.status,
       },
     });
+  }
+};
+
+export const resend = (id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const formData = {
+      id,
+    };
+    if (localStorage.getItem("token")) {
+      setAuthToken(localStorage.getItem("token"));
+    }
+    const res = await axios.post(
+      apiUrl + "/prescription/resend",
+      formData,
+      config
+    );
+    console.log(res.data);
+    if (res.data === true) {
+      dispatch({
+        type: RESEND,
+        payload: res.data,
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {    
+    return false;
   }
 };
 

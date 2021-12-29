@@ -7,6 +7,8 @@ import {
   CONSULT_ERROR,
   DELETE_CONSULT,
   UPDATE_CONSULT,
+  GET_COMMENTS,
+  GET_LIKES
 } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
@@ -221,5 +223,51 @@ export const deleteConsult = (id) => async (dispatch) => {
       },
     });
     return null;
+  }
+};
+
+export const getCommentForConsult = (id) => async (dispatch) => {
+  try {
+    if (localStorage.getItem("token")) {
+      setAuthToken(localStorage.getItem("token"));
+    }
+    const res = await axios.get(apiUrl + "/consulting/comment/" + id);
+    console.log(res.data);
+
+    dispatch({
+      type: GET_COMMENTS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error,
+        status: error,
+      },
+    });
+  }
+};
+
+export const getLikesForConsult = (id) => async (dispatch) => {
+  try {
+    if (localStorage.getItem("token")) {
+      setAuthToken(localStorage.getItem("token"));
+    }
+    const res = await axios.get(apiUrl + "/consulting/likes/search/" + id);
+    console.log(res.data);
+
+    dispatch({
+      type: GET_LIKES,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error,
+        status: error,
+      },
+    });
   }
 };

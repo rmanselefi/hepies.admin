@@ -1,56 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
   CardHeader,
   CardBody,
-  CardTitle,  
+  CardTitle,
   Row,
   Col,
+  CustomInput,
 } from "reactstrap";
 import { connect } from "react-redux";
 import { saveGuideline } from "../../../store/actions/guidelinesActions";
 import swal from "sweetalert";
 import { AvForm } from "availity-reactstrap-validation";
 
-const DrugForm = ({ saveGuideline, updateDrug, location }) => {
+const GuidelinesForm = ({ saveGuideline,loading }) => {
   const [formData, setFormData] = useState({
     id: "",
-    name: "",
-    url: "",
+    image: null,
   });
-  const { state } = location;
 
-  useEffect(() => {
-    if (state != null) {
-      setFormData({
-        id: state.detail.id,
-        name: state.detail.name,
-        url: state.detail.url,
-      });
-    }
-  }, [state]);
-
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data =
-      state != null
-        ? await updateDrug(formData)
-        : await saveGuideline(formData);
-    
-    if (data != null) {
-      swal(
-        "Saved!",
-        "Your Patient data has been succesfully saved!",
-        "success"
-      );
+    try {
+      saveGuideline(formData).then(() =>{
+        swal("Saved!", "Your Guideline is uploaded successfully", "success");
+      });
+     
+    } catch (e) {
+      swal("Error!", "Unable to upload your Guideline!", "error");
     }
   };
 
-  const handleImageChange = (e) => {
+  const handleFileChange = (e) => {
     if (e.target.files[0]) {
       const image = e.target.files[0];
-      setFormData({ ...formData, image: image });
+      setFormData({ image });
     }
   };
 
@@ -60,26 +45,28 @@ const DrugForm = ({ saveGuideline, updateDrug, location }) => {
         <Col md="12">
           <Card className="card-user">
             <CardHeader>
-              <CardTitle tag="h5">Add Guideline</CardTitle>
+              <CardTitle tag="h5">Upload Guideline</CardTitle>
             </CardHeader>
             <CardBody>
-              <AvForm onValidSubmit={hadleSubmit}>
-                <Row></Row>
+              <AvForm onValidSubmit={handleSubmit}>
                 <Row>
-                  <input
-                    accept="image/*"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                    onChange={handleImageChange}
-                  />
+                  <Col md="6">
+                    <CustomInput
+                      accept="application/pdf"
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={handleFileChange}
+                    />
+                  </Col>
                 </Row>
+                <br />
                 <Row>
-                  <div className="update ml-auto mr-auto">
+                  <Col>
                     <Button className="btn-round" color="primary" type="submit">
                       Upload Guideline
                     </Button>
-                  </div>
+                  </Col>
                 </Row>
               </AvForm>
             </CardBody>
@@ -90,8 +77,13 @@ const DrugForm = ({ saveGuideline, updateDrug, location }) => {
   );
 };
 
-DrugForm.propTypes = {};
+GuidelinesForm.propTypes = {};
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  loading: state.guidelines.loading,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {
   saveGuideline,
-})(DrugForm);
+})(GuidelinesForm);

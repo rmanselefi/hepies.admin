@@ -1,4 +1,8 @@
-import { GET_PRESCRIPTIONS, GET_PRESCRIPTION_PAPER } from "../actions/types";
+import {
+  GET_PRESCRIPTIONS,
+  GET_PRESCRIPTION_PAPER,
+  RESEND,
+} from "../actions/types";
 const initialState = {
   prescriptions: [],
   paper: [],
@@ -22,6 +26,10 @@ export default function (state = initialState, action) {
         ...state,
         paper: payload,
         loading: false,
+      };
+    case RESEND:
+      return {
+        ...state,
       };
 
     default:
