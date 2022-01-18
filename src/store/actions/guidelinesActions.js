@@ -5,6 +5,7 @@ import {
   ADD_GUIDELINE,
   DELETE_GUIDELINE,
   LOADING_TOGGLE,
+  UPLOAD_STATUS,
 } from "./types";
 import axios from "axios";
 import { apiUrl } from "./constant";
@@ -55,7 +56,14 @@ export const saveGuideline = (guideline) => async (dispatch) => {
         "state_changed",
         (snapshot) => {
           // progress function ...
-          console.log(snapshot.state);
+          const percentUploaded = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          // console.log("percentUploaded ====> ", percentUploaded);
+          dispatch({
+            type: UPLOAD_STATUS,
+            payload: percentUploaded,
+          });
         },
         (error) => {
           // Error function ...
@@ -85,6 +93,12 @@ export const saveGuideline = (guideline) => async (dispatch) => {
                   type: ADD_GUIDELINE,
                   payload: formData,
                 });
+
+                dispatch({
+                  type: UPLOAD_STATUS,
+                  payload: 0,
+                });
+                
               }
             });
         }
@@ -114,8 +128,8 @@ export const deleteGuideline = (guideId) => async (dispatch) => {
     dispatch({
       type: GUIDELINE_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;

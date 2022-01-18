@@ -55,8 +55,8 @@ export const addPatient = (formData) => async (dispatch) => {
     dispatch({
       type: PATIENT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -90,8 +90,8 @@ export const updatePatient = (formData) => async (dispatch) => {
     dispatch({
       type: PATIENT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status:"400"
       },
     });
     return null;
@@ -112,8 +112,8 @@ export const deletePatient = (id) => async (dispatch) => {
     dispatch({
       type: PATIENT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;

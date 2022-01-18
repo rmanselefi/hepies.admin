@@ -24,8 +24,8 @@ export const getPrescriptions = () => async (dispatch) => {
     dispatch({
       type: PRES_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status:"400"
       },
     });
   }
@@ -80,8 +80,8 @@ export const getPrescriptionPaper = (code) => async (dispatch) => {
     dispatch({
       type: PRES_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400"
       },
     });
   }

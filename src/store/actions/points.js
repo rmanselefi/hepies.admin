@@ -56,8 +56,8 @@ export const addPoint = (formData) => async (dispatch) => {
     dispatch({
       type: POINT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400"
       },
     });
     return null;
@@ -91,8 +91,8 @@ export const updatePoint = (formData) => async (dispatch) => {
     dispatch({
       type: POINT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -113,8 +113,8 @@ export const deletePoint = (id) => async (dispatch) => {
     dispatch({
       type: POINT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status:"400"
       },
     });
     return null;

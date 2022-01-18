@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -8,25 +8,34 @@ import {
   Row,
   Col,
   CustomInput,
+  Progress,
 } from "reactstrap";
 import { connect } from "react-redux";
 import { saveGuideline } from "../../../store/actions/guidelinesActions";
 import swal from "sweetalert";
 import { AvForm } from "availity-reactstrap-validation";
+import { UPLOAD_STATUS } from "store/actions/types";
 
-const GuidelinesForm = ({ saveGuideline,loading }) => {
+const GuidelinesForm = ({ saveGuideline, loading, percentage }) => {
   const [formData, setFormData] = useState({
     id: "",
     image: null,
   });
 
+  const [percent, setPercent] = useState(0);
+
+  useEffect(() => {
+    setPercent(percentage);
+
+    if (percentage === 100) {
+      swal("Saved!", "Your Guideline is uploaded successfully", "success");
+    }
+  }, [percentage]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      saveGuideline(formData).then(() =>{
-        swal("Saved!", "Your Guideline is uploaded successfully", "success");
-      });
-     
+      saveGuideline(formData).then(() => {});
     } catch (e) {
       swal("Error!", "Unable to upload your Guideline!", "error");
     }
@@ -38,7 +47,9 @@ const GuidelinesForm = ({ saveGuideline,loading }) => {
       setFormData({ image });
     }
   };
-
+  console.log("====================================");
+  console.log(percent);
+  console.log("====================================");
   return (
     <div className="content">
       <Row>
@@ -48,6 +59,13 @@ const GuidelinesForm = ({ saveGuideline,loading }) => {
               <CardTitle tag="h5">Upload Guideline</CardTitle>
             </CardHeader>
             <CardBody>
+              {percent > 0 ? (
+                <>
+                  {percent + "%"}
+                  <Progress striped color="info" value={percent} />
+                </>
+              ) : null}
+
               <AvForm onValidSubmit={handleSubmit}>
                 <Row>
                   <Col md="6">
@@ -81,6 +99,7 @@ GuidelinesForm.propTypes = {};
 
 const mapStateToProps = (state) => ({
   loading: state.guidelines.loading,
+  percentage: state.guidelines.percentage,
   auth: state.auth,
 });
 

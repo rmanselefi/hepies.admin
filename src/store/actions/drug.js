@@ -81,8 +81,8 @@ export const addDrug = (formData) => async (dispatch) => {
     dispatch({
       type: DRUG_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -116,8 +116,8 @@ export const updateDrug = (formData) => async (dispatch) => {
     dispatch({
       type: DRUG_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -138,8 +138,8 @@ export const deleteDrug = (id) => async (dispatch) => {
     dispatch({
       type: DRUG_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status:"400"
       },
     });
     return null;

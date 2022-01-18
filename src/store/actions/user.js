@@ -24,8 +24,8 @@ export const getUsers = () => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400"
       },
     });
   }
@@ -44,8 +44,8 @@ export const deleteUser = (id) => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -71,8 +71,8 @@ export const addUser = (formData) => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400"
       },
     });
     return null;
@@ -102,8 +102,8 @@ export const updateUser = (formData) => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400"
       },
     });
     return null;
@@ -139,8 +139,8 @@ export const enableDisableUser = (row) => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -176,8 +176,8 @@ export const canSee = (row) => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg:"error",
+        status: "400",
       },
     });
     return null;
@@ -205,8 +205,8 @@ export const getUserHistory = (id, type) => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
   }

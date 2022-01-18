@@ -111,8 +111,8 @@ export const addConsult = (formData) => async (dispatch) => {
     dispatch({
       type: CONSULT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -197,8 +197,8 @@ export const updateConsult = (formData, isUrl) => async (dispatch) => {
     dispatch({
       type: CONSULT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg:"error",
+        status: "400",
       },
     });
     return null;
@@ -218,8 +218,8 @@ export const deleteConsult = (id) => async (dispatch) => {
     dispatch({
       type: CONSULT_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;

@@ -5,11 +5,13 @@ import {
   GUIDELINE_ERROR,
   UPDATE_GUIDELINE,
   LOADING_TOGGLE,
+  UPLOAD_STATUS,
 } from "../actions/types";
 const initialState = {
   guidelines: [],
   guideline: null,
   loading: false,
+  percentage: 0,
   error: {},
 };
 
@@ -39,8 +41,8 @@ export default function (state = initialState, action) {
     case LOADING_TOGGLE:
       return {
         ...state,
-        loading: payload
-      }
+        loading: payload,
+      };
     case GUIDELINE_ERROR:
       return {
         ...state,
@@ -60,6 +62,11 @@ export default function (state = initialState, action) {
             : guideline
         ),
         loading: false,
+      };
+    case UPLOAD_STATUS:
+      return {
+        ...state,
+        percentage: payload,
       };
     default:
       return state;

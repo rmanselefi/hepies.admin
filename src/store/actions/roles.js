@@ -55,8 +55,8 @@ export const addRole = (formData) => async (dispatch) => {
     dispatch({
       type: ROLE_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400"
       },
     });
     return null;
@@ -90,8 +90,8 @@ export const updateRole = (formData) => async (dispatch) => {
     dispatch({
       type: ROLE_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400"
       },
     });
     return null;
@@ -111,8 +111,8 @@ export const deleteRole = (id) => async (dispatch) => {
     dispatch({
       type: ROLE_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status:"400"
       },
     });
     return null;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {  
+import {
   GET_LOOKUPS,
   LOOKUP_ERROR,
   ADD_LOOKUP,
@@ -55,8 +55,8 @@ export const addLookup = (formData) => async (dispatch) => {
     dispatch({
       type: LOOKUP_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -90,8 +90,8 @@ export const updateLookup = (formData) => async (dispatch) => {
     dispatch({
       type: LOOKUP_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;
@@ -112,8 +112,8 @@ export const deleteLookup = (id) => async (dispatch) => {
     dispatch({
       type: LOOKUP_ERROR,
       payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
+        msg: "error",
+        status: "400",
       },
     });
     return null;

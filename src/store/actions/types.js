@@ -34,7 +34,7 @@ export const UPDATE_CONSULT = "UPDATE_CONSULT";
 export const CONSULT_ERROR = "CONSULT_ERROR";
 
 export const GET_COMMENTS = "GET_COMMENTS";
-export const GET_LIKES= "GET_LIKES";
+export const GET_LIKES = "GET_LIKES";
 
 //Drugs
 export const GET_DRUGS = "GET_DRUGS";
@@ -51,7 +51,8 @@ export const ADD_GUIDELINE = "ADD_GUIDELINE";
 export const DELETE_GUIDELINE = "DELETE_GUIDELINE";
 export const UPDATE_GUIDELINE = "UPDATE_GUIDELINE";
 export const GUIDELINE_ERROR = "DRUG_ERROR";
-export const LOADING_TOGGLE = "LOADING_TOGGLE"
+export const LOADING_TOGGLE = "LOADING_TOGGLE";
+export const UPLOAD_STATUS = "UPLOAD_STATUS";
 
 //lookups
 export const GET_LOOKUPS = "GET_LOOKUPS";
