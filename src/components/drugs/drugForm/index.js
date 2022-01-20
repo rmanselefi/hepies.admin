@@ -20,7 +20,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
   const [formData, setFormData] = useState({
     id: "",
     name: "",
-    category: "",
+    type: "",
     strength: "",
     unit: "",
     about: "",
@@ -33,10 +33,10 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
       setFormData({
         id: state.detail.id,
         name: state.detail.name,
-        category: state.detail.type,
+        type: state.detail.type,
         strength: state.detail.strength,
         unit: state.detail.unit,
-        description: state.detail.about,
+        about: state.detail.about,
         route: state.detail.route,
       });
     }
@@ -48,7 +48,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
       [name]: event.target.value,
     });
   };
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data =
       state != null ? await updateDrug(formData) : await addDrug(formData);
@@ -70,7 +70,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
               <CardTitle tag="h5">Change Drug Data</CardTitle>
             </CardHeader>
             <CardBody>
-              <AvForm onValidSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={handleSubmit}>
                 <Row>
                   <Col className="pr-1" md="6">
                     <FormGroup>
@@ -91,9 +91,9 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
                       <AvField
                         placeholder="Category"
                         type="text"
-                        value={formData.category}
-                        onChange={handleChange("category")}
-                        name="category"
+                        value={formData.type}
+                        onChange={handleChange("type")}
+                        name="type"
                         required
                       />
                     </FormGroup>
@@ -144,9 +144,9 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
                       <AvField
                         placeholder="Description"
                         type="textarea"
-                        value={formData.description}
-                        onChange={handleChange("description")}
-                        name="description"
+                        value={formData.about}
+                        onChange={handleChange("about")}
+                        name="about"
                       />
                     </FormGroup>
                   </Col>

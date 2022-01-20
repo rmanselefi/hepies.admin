@@ -18,13 +18,7 @@ import { AvForm, AvField } from "availity-reactstrap-validation";
 
 import swal from "sweetalert";
 
-const UserForm = ({
-  addUser,
-  getRoles,
-  updateUser,
-  location,
-  users: { datas },
-}) => {
+const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -67,7 +61,7 @@ const UserForm = ({
         user: {
           id: state.detail.user.id,
           username: state.detail.user.username,
-          role: state.detail.user.role,
+          role: state.detail.user.role.id,
         },
       });
     }
@@ -90,7 +84,7 @@ const UserForm = ({
       });
     }
   };
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data =
       state != null ? await updateUser(formData) : await addUser(formData);
@@ -114,7 +108,7 @@ const UserForm = ({
               <CardTitle tag="h5">{title}</CardTitle>
             </CardHeader>
             <CardBody>
-              <AvForm onValidSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={handleSubmit}>
                 <Row>
                   <Col className="pr-1" md="4">
                     <FormGroup>
@@ -268,7 +262,7 @@ const UserForm = ({
                         type="password"
                         value={formData.user?.password}
                         onChange={handleChange("password")}
-                        required={state !== null?false:true}
+                        required={state !== null ? false : true}
                       />
                     </FormGroup>
                   </Col>
@@ -283,7 +277,7 @@ const UserForm = ({
                         value={formData.user?.role}
                         onChange={handleChange("role")}
                       >
-                        {datas.map((d, i) => {
+                        {roles.map((d, i) => {
                           return (
                             <option key={i} value={d.id}>
                               {d.name}
@@ -296,11 +290,9 @@ const UserForm = ({
                 </Row>
                 <Row></Row>
                 <Row>
-                  <div className="update ml-auto mr-auto">
-                    <Button className="btn-round" color="primary" type="submit">
-                      Register User
-                    </Button>
-                  </div>
+                  <Button className="btn-round" color="primary" type="submit">
+                    Save Changes
+                  </Button>
                 </Row>
               </AvForm>
             </CardBody>
@@ -315,6 +307,7 @@ UserForm.propTypes = {};
 
 const mapStateToProps = (state) => ({
   users: state.users,
+  roles: state.roles.roles,
   auth: state.auth,
 });
 

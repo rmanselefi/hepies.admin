@@ -3,7 +3,7 @@ import {
   POST_ERROR,
   ADD_USER,
   DELETE_DATA,
-  GET_USERS,
+  GET_USERS,GET_USERS_HISTORY
 } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
@@ -191,14 +191,14 @@ export const getUserHistory = (id, type) => async (dispatch) => {
     }
     let res;
     if (type === "Pharmacist") {
-      res = await axios.get(apiUrl + "/users/pharmacy/history/" + id);
+      res = await axios.get(apiUrl + "/prescription/pharmacy/history/" + id);
     } else {
-      res = await axios.get(apiUrl + "/users/prescription/history/" + id);
+      res = await axios.get(apiUrl + "/prescription/prescription/history/" + id);
     }
     console.log(res.data);
 
     dispatch({
-      type: GET_USERS,
+      type: GET_USERS_HISTORY,
       payload: res.data,
     });
   } catch (error) {

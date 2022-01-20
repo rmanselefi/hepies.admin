@@ -7,11 +7,7 @@ import { Card, CardBody, Row, Col } from "reactstrap";
 import { withRouter } from "react-router";
 import icons from "../../shared/icons";
 
-const UserHistory = ({
-  getUserHistory,
-  location,
-  users: { datas },
-}) => {
+const UserHistory = ({ getUserHistory, location, userHistories }) => {
   const { state } = location;
 
   const id = state.detail.id;
@@ -20,6 +16,20 @@ const UserHistory = ({
     getUserHistory(id, type);
   }, [getUserHistory, id, type]);
 
+  const exportData = userHistories.map((data) => {
+    var newObj = {
+      patient: `${data.patient?.name} ${data.patient?.fathername}`,
+      phone: data.patient?.phone,
+    };
+    return {
+      ...data,
+      ...newObj,
+    };
+  });
+
+  console.log("==============exportData======================");
+  console.log(exportData);
+  console.log("==============exportData======================");
   return (
     <div className="content">
       <Row>
@@ -39,51 +49,32 @@ const UserHistory = ({
                   cellStyle: {
                     fontSize: "13px",
                   },
+                  exportButton: true,
                 }}
                 isLoading={false}
                 columns={[
                   { title: "#", render: (rowData) => rowData.tableData.id + 1 },
                   {
                     title: "Prescribed By",
-                    render: (patient) => {
-                      return `${patient.professional}`;
-                    },
-                    customFilterAndSearch: (term, patient) =>
-                      `${patient.professional}`
-                        .toLowerCase()
-                        .includes(term.toLowerCase()),
+                    field: "professional",
                   },
                   {
                     title: "Patient",
-                    render: (patient) => {
-                      return `${patient.patient?.name} ${patient.patient?.fathername}`;
-                    },
-                    customFilterAndSearch: (term, patient) =>
-                      `${patient.patient?.name} ${patient.patient?.fathername}`
-                        .toLowerCase()
-                        .includes(term.toLowerCase()),
+                    field: "patient",
                   },
                   {
                     title: "Phone Number",
-                    render: (patient) => {
-                      return `${patient.patient?.phone}`;
-                    },
-                    customFilterAndSearch: (term, patient) =>
-                      `${patient.patient?.phone}`
-                        .toLowerCase()
-                        .includes(term.toLowerCase()),
+                    field: "phone",
                   },
                   {
                     title: "Drug",
-                    render: (row) => {
-                      return `${row.drug?.name} , ${row.drug?.strength}${row.drug?.unit}`;
-                    },
+                    field: "drug_name",
                   },
                   { title: "Code", field: "code" },
                   { title: "Take in", field: "takein" },
                   { title: "Frequency", field: "frequency" },
                 ]}
-                data={datas}
+                data={exportData}
                 title={"My Pharmacy for " + state.detail.name}
                 // actions={[
                 //   {
@@ -115,7 +106,7 @@ const UserHistory = ({
 UserHistory.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  userHistories: state.users.userHistories,
   auth: state.auth,
 });
 export default connect(mapStateToProps, {

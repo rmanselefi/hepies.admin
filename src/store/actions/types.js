@@ -11,6 +11,8 @@ export const CLEAR_PROFILE = "CLEAR_PROFILE";
 
 export const GET_DATAS = "GET_DATAS";
 export const GET_USERS = "GET_USERS";
+export const GET_USERS_HISTORY = "GET_USERS_HISTORY";
+
 export const POST_ERROR = "POST_ERROR";
 export const UPDATE_DATA = "UPDATE_DATA";
 export const DELETE_DATA = "DELETE_DATA";

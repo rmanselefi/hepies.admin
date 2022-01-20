@@ -7,10 +7,12 @@ import {
   ADD_USER,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  GET_USERS_HISTORY,
 } from "../actions/types";
 const initialState = {
   datas: [],
   data: null,
+  userHistories: [],
   loading: true,
   error: {},
 };
@@ -44,6 +46,11 @@ export default function (state = initialState, action) {
         datas: state.datas.filter((post) => post.id !== payload),
         loading: false,
       };
+    case GET_USERS_HISTORY:
+      return {
+        ...state,
+        userHistories: [...payload],
+      };
     case POST_ERROR:
       return {
         ...state,
@@ -55,7 +62,7 @@ export default function (state = initialState, action) {
         ...state,
         datas: state.datas.map((post) =>
           post.id === payload.id
-            ? { ...post, user: {...post.user, active: !payload.user.active } }
+            ? { ...post, user: { ...post.user, active: !payload.user.active } }
             : post
         ),
         loading: false,
