@@ -73,27 +73,12 @@ const UserHistory = ({ getUserHistory, location, userHistories }) => {
                   { title: "Code", field: "code" },
                   { title: "Take in", field: "takein" },
                   { title: "Frequency", field: "frequency" },
+                  { title: "Material name", field: "material_name" },
+                  { title: "Size", field: "size" },
+                  { title: "Read Date", field: "read_date" },
                 ]}
                 data={exportData}
                 title={"My Pharmacy for " + state.detail.name}
-                // actions={[
-                //   {
-                //     icon: () => <AddBox />,
-                //     tooltip: "Add Drug",
-                //     isFreeAction: true,
-                //     onClick: (event) => onAddClick(event),
-                //   },
-                //   {
-                //     icon: () => <Edit />,
-                //     tooltip: "Edit Drug",
-                //     onClick: (event, rowData) => onEditClick(event, rowData),
-                //   },
-                //   {
-                //     icon: () => <DeleteOutline />,
-                //     tooltip: "Delete Drug",
-                //     onClick: (event, rowData) => onDeleteClick(event, rowData),
-                //   },
-                // ]}
               />
             </CardBody>
           </Card>
