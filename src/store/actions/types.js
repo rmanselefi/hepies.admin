@@ -17,6 +17,7 @@ export const POST_ERROR = "POST_ERROR";
 export const UPDATE_DATA = "UPDATE_DATA";
 export const DELETE_DATA = "DELETE_DATA";
 export const ADD_USER = "ADD_USER";
+export const RESET_PASSWORD = "RESET_PASSWORD";
 
 export const REMOVE_COMMENT = "REMOVE_COMMENT";
 export const ADD_COMMENT = "ADD_COMMENT";

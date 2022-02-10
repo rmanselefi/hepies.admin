@@ -8,6 +8,7 @@ import {
   ADD_COMMENT,
   REMOVE_COMMENT,
   GET_USERS_HISTORY,
+  RESET_PASSWORD,
 } from "../actions/types";
 const initialState = {
   datas: [],
@@ -35,6 +36,12 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case ADD_USER:
+      return {
+        ...state,
+        datas: [payload, ...state.datas],
+        loading: false,
+      };
+    case RESET_PASSWORD:
       return {
         ...state,
         datas: [payload, ...state.datas],

@@ -23,7 +23,7 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Edit from "@material-ui/icons/Edit";
 import icons from "../shared/icons";
 import swal from "sweetalert";
-import moment from 'moment'
+import moment from "moment";
 
 const Users = ({
   history,
@@ -102,6 +102,14 @@ const Users = ({
     });
   };
 
+  const onResetClick = (e, row) => {
+    e.preventDefault();
+    history.push({
+      pathname: "/admin/user/reset",
+      state: row,
+    });
+  };
+
   return (
     <div className="content">
       <Row>
@@ -137,10 +145,13 @@ const Users = ({
                   { title: "Work Place", field: "workplace" },
                   { title: "Points", field: "points" },
                   {
-                    title: "Overall Points",field: "overall_points"
+                    title: "Overall Points",
+                    field: "overall_points",
                   },
                   { title: "Phone", field: "phone" },
                   { title: "Email", field: "email" },
+                  { title: "Sex", field: "sex" },
+                  { title: "Age", field: "age" },
                   {
                     title: "Date",
                     render: (patient) => {
@@ -202,6 +213,19 @@ const Users = ({
                           name={"isFit"}
                           color="primary"
                         />
+                      </div>
+                    ),
+                  },
+                  {
+                    title: "Reset Password",
+                    render: (row) => (
+                      <div>
+                        <Button
+                          color="link"
+                          onClick={(event) => onResetClick(event, row)}
+                        >
+                          Reset
+                        </Button>
                       </div>
                     ),
                   },

@@ -31,6 +31,7 @@ import instruments from "components/instruments";
 import instrumentForm from "components/instruments/instrumentForm";
 import comments from "components/consulting/comments/comments";
 import likes from "components/consulting/likes/likes";
+import resetpassword from "components/users/resetpassword";
 
 var routes = [
   {
@@ -68,6 +69,14 @@ var routes = [
     layout: "/admin",
     show: false,
   },
+
+  {
+    path: "/user/reset",
+    component: resetpassword,
+    layout: "/admin",
+    show: false,
+  },
+
   {
     path: "/prescriptions",
     name: "Prescriptions",

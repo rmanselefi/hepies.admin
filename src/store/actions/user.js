@@ -3,7 +3,7 @@ import {
   POST_ERROR,
   ADD_USER,
   DELETE_DATA,
-  GET_USERS,GET_USERS_HISTORY
+  GET_USERS,GET_USERS_HISTORY,RESET_PASSWORD
 } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
@@ -209,5 +209,35 @@ export const getUserHistory = (id, type) => async (dispatch) => {
         status: "400",
       },
     });
+  }
+};
+
+export const resetPassword = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.put(
+      apiUrl + "/users/reset/password/" + formData.id,
+      formData,
+      config
+    );
+    console.log(res.data);
+    dispatch({
+      type: RESET_PASSWORD,
+      payload: res.data,
+    });
+    return res.data;
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: "error",
+        status: "400"
+      },
+    });
+    return null;
   }
 };

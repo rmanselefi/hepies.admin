@@ -92,13 +92,7 @@ const Prescriptions = ({
                   },
                   {
                     title: "Prescribed By",
-                    render: (patient) => {
-                      return `${patient.profession} `;
-                    },
-                    customFilterAndSearch: (term, patient) =>
-                      `${patient.professional}`
-                        .toLowerCase()
-                        .includes(term.toLowerCase()),
+                    field: "professional",
                   },
 
                   {

@@ -17,6 +17,7 @@ import { getRoles } from "../../../store/actions/roles";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 
 import swal from "sweetalert";
+var DatePicker = require("reactstrap-date-picker");
 
 const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
   const [formData, setFormData] = useState({
@@ -28,10 +29,16 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
     proffesion: "",
     profile: "",
     phone: "",
+    age: "",
+    sex: "",
+    dob: "",
+    dateBirth: new Date().toISOString(),
     points: "",
     speciality: "",
     workplace: "",
     interests: "",
+    license: "",
+    overall_points: "",
     user: {
       id: "",
       username: "",
@@ -54,10 +61,18 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
         profile: state.detail.profile,
         email: state.detail.email,
         phone: state.detail.phone,
+        age: state.detail.age,
+        dateBirth:
+          state.detail.dob === "" || state.detail.dob === undefined
+            ? formData.dateBirth
+            : new Date(state.detail.dob).toISOString(),
+        sex: state.detail.sex,
         points: state.detail.points,
         speciality: state.detail.speciality,
         workplace: state.detail.workplace,
         interests: state.detail.interests,
+        license: state.detail.license,
+        overall_points: state.detail.overall_points,
         user: {
           id: state.detail.user.id,
           username: state.detail.user.username,
@@ -66,6 +81,14 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
       });
     }
   }, [state, getRoles]);
+
+  const handleDate = (v, f) => {
+    setFormData({
+      ...formData,
+      dateBirth: v,
+      dob: f,
+    });
+  };
 
   const handleChange = (name) => (event) => {
     event.preventDefault();
@@ -88,13 +111,11 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
     e.preventDefault();
     const data =
       state != null ? await updateUser(formData) : await addUser(formData);
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
+
     if (data != null) {
       swal(
         "Saved!",
-        "Your Patient data has been succesfully saved!",
+        "Your Patient data has been successfully saved!",
         "success"
       );
     }
@@ -145,7 +166,6 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
                         type="text"
                         value={formData.grandfathername}
                         onChange={handleChange("grandfathername")}
-                        required
                       />
                     </FormGroup>
                   </Col>
@@ -186,7 +206,46 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
                         type="email"
                         value={formData.email}
                         onChange={handleChange("email")}
-                        required
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="pr-1" md="4">
+                    <FormGroup>
+                      <label>Sex</label>
+                      <AvField
+                        type="select"
+                        name="sex"
+                        value={formData.sex}
+                        onChange={handleChange("sex")}
+                      >
+                        <option key={1} value="Male">
+                          Male
+                        </option>
+                        <option key={2} value="Female">
+                          Female
+                        </option>
+                      </AvField>
+                    </FormGroup>
+                  </Col>
+                  <Col className="pl-1" md="4">
+                    <FormGroup>
+                      <label>Age</label>
+                      <Input
+                        placeholder="Age"
+                        type="text"
+                        value={formData.age}
+                        onChange={handleChange("age")}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pl-1" md="4">
+                    <FormGroup>
+                      <label>Date of Birth</label>
+                      <DatePicker
+                        value={formData.dateBirth}
+                        onChange={(v, f) => handleDate(v, f)}
                       />
                     </FormGroup>
                   </Col>
@@ -235,6 +294,18 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
                         type="text"
                         value={formData.interests}
                         onChange={handleChange("interests")}
+                      />
+                    </FormGroup>
+                  </Col>
+
+                  <Col className="pr-1" md="6">
+                    <FormGroup>
+                      <label>Over all Points</label>
+                      <Input
+                        placeholder="Overall Points"
+                        type="text"
+                        value={formData.overall_points}
+                        onChange={handleChange("overall_points")}
                       />
                     </FormGroup>
                   </Col>
@@ -288,7 +359,17 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
                     </FormGroup>
                   </Col>
                 </Row>
-                <Row></Row>
+                <Row>
+                  {formData.license !== "" ? (
+                    <Col>
+                      <FormGroup>
+                        <label>Practice License</label>
+                        <br />
+                        <img src={formData.license} alt="license" />
+                      </FormGroup>
+                    </Col>
+                  ) : null}
+                </Row>
                 <Row>
                   <Button className="btn-round" color="primary" type="submit">
                     Save Changes
