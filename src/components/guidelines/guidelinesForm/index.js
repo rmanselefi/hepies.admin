@@ -47,9 +47,7 @@ const GuidelinesForm = ({ saveGuideline, loading, percentage }) => {
       setFormData({ image });
     }
   };
-  console.log("====================================");
-  console.log(percent);
-  console.log("====================================");
+
   return (
     <div className="content">
       <Row>

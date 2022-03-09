@@ -38,7 +38,7 @@ const RoleForm = ({ addRole, updateRole, location }) => {
       [name]: event.target.value,
     });
   };
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = state != null ? await updateRole(formData) : addRole(formData);
    
@@ -55,7 +55,7 @@ const RoleForm = ({ addRole, updateRole, location }) => {
               <CardTitle tag="h5">Role Form</CardTitle>
             </CardHeader>
             <CardBody>
-              <Form onSubmit={hadleSubmit}>
+              <Form onSubmit={handleSubmit}>
                 <Row>
                   <Col className="pr-1" md="5">
                     <FormGroup>

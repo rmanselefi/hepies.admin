@@ -15,8 +15,9 @@ import { connect } from "react-redux";
 import { addDrug, updateDrug } from "../../../store/actions/drug";
 import swal from "sweetalert";
 import { AvForm, AvField } from "availity-reactstrap-validation";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const DrugForm = ({ addDrug, updateDrug, location }) => {
+const DrugForm = ({ addDrug, updateDrug, location, loading }) => {
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -54,11 +55,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
       state != null ? await updateDrug(formData) : await addDrug(formData);
 
     if (data != null) {
-      swal(
-        "Saved!",
-        "Your Patient data has been succesfully saved!",
-        "success"
-      );
+      swal("Saved!", "Your Drug data has been successfully saved!", "success");
     }
   };
   return (
@@ -156,7 +153,9 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
                     <Button className="btn-round" color="primary" type="submit">
                       Save Drug
                     </Button>
+                    {loading && <CircularProgress />}
                   </Col>
+                  <Col></Col>
                 </Row>
               </AvForm>
             </CardBody>
@@ -169,7 +168,10 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
 
 DrugForm.propTypes = {};
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  loading: state.drugs.loading,
+});
+export default connect(mapStateToProps, {
   addDrug,
   updateDrug,
 })(DrugForm);

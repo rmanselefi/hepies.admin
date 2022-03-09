@@ -14,8 +14,11 @@ import {
 import { connect } from "react-redux";
 import { addVoucher, updateVoucher } from "../../../store/actions/voucher";
 import swal from "sweetalert";
+import { AvForm, AvField } from "availity-reactstrap-validation";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const VoucherForm = ({ addVoucher, updateVoucher, location }) => {
+
+const VoucherForm = ({ addVoucher, updateVoucher, location, loading }) => {
   const [formData, setFormData] = useState({
     id: "",
     code: "",
@@ -40,7 +43,7 @@ const VoucherForm = ({ addVoucher, updateVoucher, location }) => {
       [name]: event.target.value,
     });
   };
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data =
       state != null ? await updateVoucher(formData) : addVoucher(formData);
@@ -57,27 +60,31 @@ const VoucherForm = ({ addVoucher, updateVoucher, location }) => {
               <CardTitle tag="h5">Add Voucher</CardTitle>
             </CardHeader>
             <CardBody>
-              <Form onSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={handleSubmit}>
                 <Row>
                   <Col className="pr-1" md="5">
                     <FormGroup>
                       <label>Code</label>
-                      <Input
+                      <AvField
                         placeholder="Code"
+                        name="code"
                         type="text"
                         value={formData.code}
                         onChange={handleChange("code")}
+                        required
                       />
                     </FormGroup>
                   </Col>
                   <Col className="px-1" md="3">
                     <FormGroup>
                       <label>When</label>
-                      <Input
+                      <AvField
                         placeholder="Amount"
+                        name="amount"
                         type="text"
                         value={formData.amount}
                         onChange={handleChange("amount")}
+                        required
                       />
                     </FormGroup>
                   </Col>
@@ -87,9 +94,10 @@ const VoucherForm = ({ addVoucher, updateVoucher, location }) => {
                     <Button className="btn-round" color="primary" type="submit">
                       Save Voucher
                     </Button>
+                    {loading && <CircularProgress />}
                   </Col>
                 </Row>
-              </Form>
+              </AvForm>
             </CardBody>
           </Card>
         </Col>
@@ -100,7 +108,11 @@ const VoucherForm = ({ addVoucher, updateVoucher, location }) => {
 
 VoucherForm.propTypes = {};
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  loading: state.vouchers.loading,
+});
+
+export default connect(mapStateToProps, {
   addVoucher,
   updateVoucher,
 })(VoucherForm);

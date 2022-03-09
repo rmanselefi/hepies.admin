@@ -51,7 +51,7 @@ const ConsultForm = ({ addConsult, updateConsult, location }) => {
     if (data != null) {
       swal(
         "Saved!",
-        "Your Coonsults data has been succesfully saved!",
+        "Your Consults data has been successfully saved!",
         "success"
       );
     }

@@ -45,7 +45,7 @@ var routes = [
   {
     path: "/users",
     name: "Users",
-    icon: "nc-icon nc-diamond",
+    icon: "nc-icon nc-bank",
     component: Users,
     layout: "/admin",
     show: true,
@@ -80,7 +80,7 @@ var routes = [
   {
     path: "/prescriptions",
     name: "Prescriptions",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-bank",
     component: Prescriptions,
     layout: "/admin",
     show: true,
@@ -101,7 +101,7 @@ var routes = [
   {
     path: "/patients",
     name: "Patients",
-    icon: "nc-icon nc-bell-55",
+    icon: "nc-icon nc-bank",
     component: Patients,
     layout: "/admin",
     show: true,
@@ -123,7 +123,7 @@ var routes = [
   {
     path: "/pharmacies",
     name: "Pharmacies",
-    icon: "nc-icon nc-bell-55",
+    icon: "nc-icon nc-bank",
     component: pharmacy,
     layout: "/admin",
     show: true,
@@ -171,7 +171,7 @@ var routes = [
   {
     path: "/drugs",
     name: "Drugs",
-    icon: "nc-icon nc-single-02",
+    icon: "nc-icon nc-bank",
     component: Drugs,
     layout: "/admin",
     show: true,
@@ -193,7 +193,7 @@ var routes = [
   {
     path: "/instruments",
     name: "Instruments",
-    icon: "nc-icon nc-single-02",
+    icon: "nc-icon nc-bank",
     component: instruments,
     layout: "/admin",
     show: true,
@@ -214,7 +214,7 @@ var routes = [
   {
     path: "/guidelines",
     name: "Guidelines",
-    icon: "nc-icon nc-bell-55",
+    icon: "nc-icon nc-bank",
     component: guidelines,
     layout: "/admin",
     show: true,
@@ -236,7 +236,7 @@ var routes = [
   {
     path: "/vouchers",
     name: "Vouchers",
-    icon: "nc-icon nc-single-02",
+    icon: "nc-icon nc-bank",
     component: voucher,
     layout: "/admin",
     show: true,
@@ -257,7 +257,7 @@ var routes = [
   {
     path: "/consults",
     name: "Consults",
-    icon: "nc-icon nc-tile-56",
+    icon: "nc-icon nc-bank",
     component: Consulting,
     layout: "/admin",
     show: true,
@@ -290,7 +290,7 @@ var routes = [
   {
     path: "/points",
     name: "Points",
-    icon: "nc-icon nc-tile-56",
+    icon: "nc-icon nc-bank",
     component: Points,
     layout: "/admin",
     show: true,
@@ -310,7 +310,7 @@ var routes = [
   {
     path: "/lookups",
     name: "Lookup",
-    icon: "nc-icon nc-caps-small",
+    icon: "nc-icon nc-bank",
     component: Lookup,
     layout: "/admin",
     show: true,
@@ -331,7 +331,7 @@ var routes = [
   {
     path: "/login",
     name: "Login",
-    icon: "nc-icon nc-caps-small",
+    icon: "nc-icon nc-bank",
     component: Login,
     layout: "/auth",
     show: false,
@@ -339,7 +339,7 @@ var routes = [
   {
     path: "/roles",
     name: "Roles",
-    icon: "nc-icon nc-bell-55",
+    icon: "nc-icon nc-bank",
     component: roles,
     layout: "/admin",
     show: true,

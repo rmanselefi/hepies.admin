@@ -42,7 +42,7 @@ const PointsForm = ({ addPoint, updatePoint, location }) => {
       [name]: event.target.value,
     });
   };
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data =
       state != null ? await updatePoint(formData) : addPoint(formData);   
@@ -59,7 +59,7 @@ const PointsForm = ({ addPoint, updatePoint, location }) => {
               <CardTitle tag="h5">Add Point</CardTitle>
             </CardHeader>
             <CardBody>
-              <Form onSubmit={hadleSubmit}>
+              <Form onSubmit={handleSubmit}>
                 <Row>
                   <Col className="pr-1" md="5">
                     <FormGroup>

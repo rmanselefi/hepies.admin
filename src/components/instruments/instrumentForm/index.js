@@ -13,8 +13,10 @@ import { connect } from "react-redux";
 import { addDrug, updateDrug } from "../../../store/actions/drug";
 import swal from "sweetalert";
 import { AvForm, AvField } from "availity-reactstrap-validation";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const InstrumentForm = ({ addDrug, updateDrug, location }) => {
+
+const InstrumentForm = ({ addDrug, updateDrug, location, loading }) => {
   const [formData, setFormData] = useState({
     id: "",
     material_name: "",
@@ -42,7 +44,7 @@ const InstrumentForm = ({ addDrug, updateDrug, location }) => {
     });
   };
 
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data =
       state != null ? await updateDrug(formData) : await addDrug(formData);
@@ -64,7 +66,7 @@ const InstrumentForm = ({ addDrug, updateDrug, location }) => {
               <CardTitle tag="h5">Change Instruments Data</CardTitle>
             </CardHeader>
             <CardBody>
-              <AvForm onValidSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={handleSubmit}>
                 <Row>
                   <Col className="pr-1" md="6">
                     <FormGroup>
@@ -112,6 +114,7 @@ const InstrumentForm = ({ addDrug, updateDrug, location }) => {
                     <Button className="btn-round" color="primary" type="submit">
                       Save Drug
                     </Button>
+                    {loading && <CircularProgress />}
                   </Col>
                 </Row>
               </AvForm>
@@ -124,8 +127,10 @@ const InstrumentForm = ({ addDrug, updateDrug, location }) => {
 };
 
 InstrumentForm.propTypes = {};
-
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  loading: state.drugs.loading,
+});
+export default connect(mapStateToProps, {
   addDrug,
   updateDrug,
 })(InstrumentForm);

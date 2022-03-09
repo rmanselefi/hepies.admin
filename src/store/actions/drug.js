@@ -1,11 +1,12 @@
 import axios from "axios";
 import {
-  GET_DRUGS,  
+  GET_DRUGS,
   DRUG_ERROR,
   ADD_DRUG,
   UPDATE_DRUG,
   DELETE_DRUG,
-  GET_INSTRUMENT
+  GET_INSTRUMENT,
+  LOADING_TOGGLE,
 } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
@@ -33,7 +34,6 @@ export const getDrugs = () => async (dispatch) => {
   }
 };
 
-
 export const getInstruments = () => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
@@ -60,6 +60,10 @@ export const getInstruments = () => async (dispatch) => {
 //Add Drug
 export const addDrug = (formData) => async (dispatch) => {
   delete formData.id;
+  dispatch({
+    type: LOADING_TOGGLE,
+    payload: true,
+  });
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
   }
@@ -71,13 +75,21 @@ export const addDrug = (formData) => async (dispatch) => {
   try {
     const res = await axios.post(apiUrl + "/drugs", formData, config);
     if (res.data != null) {
+      dispatch({
+        type: LOADING_TOGGLE,
+        payload: false,
+      });
+      dispatch({
+        type: ADD_DRUG,
+        payload: formData,
+      });
       return res.data;
     }
-    dispatch({
-      type: ADD_DRUG,
-      payload: formData,
-    });
   } catch (error) {
+    dispatch({
+      type: LOADING_TOGGLE,
+      payload: false,
+    });
     dispatch({
       type: DRUG_ERROR,
       payload: {
@@ -139,7 +151,7 @@ export const deleteDrug = (id) => async (dispatch) => {
       type: DRUG_ERROR,
       payload: {
         msg: "error",
-        status:"400"
+        status: "400",
       },
     });
     return null;

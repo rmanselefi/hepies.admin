@@ -72,7 +72,13 @@ function Sidebar(props) {
                   activeClassName="active"
                 >
                   <i className={prop.icon} />
-                  <p>{prop.name}</p>
+                  <p
+                    style={{
+                      fontSize: "13px",
+                    }}
+                  >
+                    {prop.name}
+                  </p>
                 </NavLink>
               </li>
             ) : prop.show &&

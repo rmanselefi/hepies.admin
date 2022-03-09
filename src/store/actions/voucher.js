@@ -5,6 +5,7 @@ import {
   ADD_VOUCHER,
   UPDATE_VOUCHER,
   DELETE_VOUCHER,
+  LOADING_TOGGLE,
 } from "./types";
 import setAuthToken from "../../components/utils/setAuthToken";
 import { apiUrl } from "./constant";
@@ -35,6 +36,10 @@ export const getVouchers = () => async (dispatch) => {
 //Add Voucher
 export const addVoucher = (formData) => async (dispatch) => {
   delete formData.id;
+  dispatch({
+    type: LOADING_TOGGLE,
+    payload: true,
+  });
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
   }
@@ -46,18 +51,26 @@ export const addVoucher = (formData) => async (dispatch) => {
   try {
     const res = await axios.post(apiUrl + "/voucher", formData, config);
     if (res.data != null) {
+      dispatch({
+        type: LOADING_TOGGLE,
+        payload: false,
+      });
+      dispatch({
+        type: ADD_VOUCHER,
+        payload: formData,
+      });
       return res.data;
     }
-    dispatch({
-      type: ADD_VOUCHER,
-      payload: formData,
-    });
   } catch (error) {
+    dispatch({
+      type: LOADING_TOGGLE,
+      payload: false,
+    });
     dispatch({
       type: VOUCHER_ERROR,
       payload: {
         msg: "error",
-        status: "400"
+        status: "400",
       },
     });
     return null;
@@ -91,8 +104,8 @@ export const updateVoucher = (formData) => async (dispatch) => {
     dispatch({
       type: VOUCHER_ERROR,
       payload: {
-        msg:"error",
-        status: "400"
+        msg: "error",
+        status: "400",
       },
     });
     return null;

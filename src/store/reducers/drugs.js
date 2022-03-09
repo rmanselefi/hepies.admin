@@ -5,12 +5,13 @@ import {
   DRUG_ERROR,
   UPDATE_DRUG,
   GET_INSTRUMENT,
+  LOADING_TOGGLE,
 } from "../actions/types";
 const initialState = {
   drugs: [],
   instruments: [],
   drug: null,
-  loading: true,
+  loading: false,
   error: {},
 };
 
@@ -36,6 +37,11 @@ export default function (state = initialState, action) {
         ...state,
         drugs: [payload, ...state.drugs],
         loading: false,
+      };
+    case LOADING_TOGGLE:
+      return {
+        ...state,
+        loading: payload,
       };
     case DELETE_DRUG:
       return {

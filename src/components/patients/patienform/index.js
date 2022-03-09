@@ -52,7 +52,7 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
       [name]: event.target.value,
     });
   };
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data =
@@ -74,7 +74,7 @@ const PatientForm = ({ addPatient, updatePatient, location }) => {
               <CardTitle tag="h5">Add Patient</CardTitle>
             </CardHeader>
             <CardBody>
-              <AvForm onValidSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={handleSubmit}>
                 <Row>
                   <Col className="pr-1" md="4">
                     <FormGroup>

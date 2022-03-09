@@ -47,7 +47,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
       [name]: event.target.value,
     });
   };
-  const hadleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data =
       state != null ? await updateDrug(formData) : await addDrug(formData);
@@ -55,7 +55,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
     if (data != null) {
       swal(
         "Saved!",
-        "Your Patient data has been succesfully saved!",
+        "Your Drug data has been succesfully saved!",
         "success"
       );
     }
@@ -69,7 +69,7 @@ const DrugForm = ({ addDrug, updateDrug, location }) => {
               <CardTitle tag="h5">Add Patient</CardTitle>
             </CardHeader>
             <CardBody>
-              <AvForm onValidSubmit={hadleSubmit}>
+              <AvForm onValidSubmit={handleSubmit}>
                 <Row>
                   <Col className="pr-1" md="6">
                     <FormGroup>

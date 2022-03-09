@@ -4,11 +4,12 @@ import {
   DELETE_VOUCHER,
   VOUCHER_ERROR,
   UPDATE_VOUCHER,
+  LOADING_TOGGLE
 } from "../actions/types";
 const initialState = {
   vouchers: [],
   voucher: null,
-  loading: true,
+  loading: false,
   error: {},
 };
 
@@ -28,6 +29,11 @@ export default function (state = initialState, action) {
         ...state,
         vouchers: [payload, ...state.roles],
         loading: false,
+      };
+    case LOADING_TOGGLE:
+      return {
+        ...state,
+        loading: payload,
       };
     case DELETE_VOUCHER:
       return {

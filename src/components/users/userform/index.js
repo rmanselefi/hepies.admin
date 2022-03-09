@@ -115,7 +115,7 @@ const UserForm = ({ addUser, getRoles, updateUser, location, roles }) => {
     if (data != null) {
       swal(
         "Saved!",
-        "Your Patient data has been successfully saved!",
+        "Your User data has been successfully saved!",
         "success"
       );
     }
