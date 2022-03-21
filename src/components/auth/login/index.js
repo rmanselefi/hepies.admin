@@ -39,7 +39,7 @@ const Login = ({ login, history }) => {
     }
   };
   if (localStorage.getItem('token')) {
-    return <Redirect to='/dashboard' />
+    return <Redirect to='/users' />
 }
   
   return (

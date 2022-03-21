@@ -82,7 +82,7 @@ export const login = (username, password, history ) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
         });
-        history.push('/admin/dashboard');
+        history.push('/admin/users');
         return res;
         
     } catch (error) {   
@@ -95,15 +95,14 @@ export const login = (username, password, history ) => async dispatch => {
 
 //Logout 
 
-export const logout = ()=>dispatch => {
-    console.log('====================================');
-    console.log('logout');
-    console.log('====================================');
+export const logout = (history)=>dispatch => {
+   
     dispatch({
         type: LOGOUT
     });
     dispatch({
         type: CLEAR_PROFILE
     });
+    history.push('/auth/login');
 
 };

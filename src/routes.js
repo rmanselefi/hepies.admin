@@ -34,14 +34,14 @@ import likes from "components/consulting/likes/likes";
 import resetpassword from "components/users/resetpassword";
 
 var routes = [
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-bank",
-    component: Dashboard,
-    layout: "/admin",
-    show: true,
-  },
+  // {
+  //   path: "/dashboard",
+  //   name: "Dashboard",
+  //   icon: "nc-icon nc-bank",
+  //   component: Dashboard,
+  //   layout: "/admin",
+  //   show: true,
+  // },
   {
     path: "/users",
     name: "Users",

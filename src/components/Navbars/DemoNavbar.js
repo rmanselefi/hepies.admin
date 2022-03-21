@@ -17,7 +17,7 @@
 
 */
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -35,10 +35,10 @@ import {
   InputGroupAddon,
   Input,
 } from "reactstrap";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 
 import routes from "routes.js";
-import {logout} from '../../store/actions/auth';
+import { logout } from "../../store/actions/auth";
 
 function Header(props) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -46,6 +46,7 @@ function Header(props) {
   const [color, setColor] = React.useState("transparent");
   const sidebarToggle = React.useRef();
   const location = useLocation();
+  const history = useHistory();
   const toggle = () => {
     if (isOpen) {
       setColor("transparent");
@@ -160,7 +161,9 @@ function Header(props) {
                 </p>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem tag="a" onClick={props.logout}>Logout</DropdownItem>               
+                <DropdownItem tag="a" onClick={() => props.logout(history)}>
+                  Logout
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <NavItem>

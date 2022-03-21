@@ -117,18 +117,7 @@ const Prescriptions = ({
                     title: "Status",
                     field: "status",
                   },
-                  {
-                    title: "Read by",
-                    field: "readby",
-                  },
-                  {
-                    title: "Read Date",
-                    render: (patient) => {
-                      return patient.readDate == null || patient.readDate == ""
-                        ? ""
-                        : moment(patient.readDate).format("MM/DD/YYYY");
-                    },
-                  },
+                  
 
                   {
                     title: "Resend",

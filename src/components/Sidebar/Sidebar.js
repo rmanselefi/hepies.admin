@@ -42,18 +42,18 @@ function Sidebar(props) {
     >
       <div className="logo">
         <a
-          href="https://www.creative-tim.com"
+          href="!#"
           className="simple-text logo-mini"
         >
-          <div className="logo-img">
+          {/* <div className="logo-img">
             <img src={logo} alt="react-logo" />
-          </div>
+          </div> */}
         </a>
         <a
-          href="https://www.creative-tim.com"
+          href="!#"
           className="simple-text logo-normal"
         >
-          Hepies Admin
+          Hepius Admin
         </a>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>

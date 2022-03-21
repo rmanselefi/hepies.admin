@@ -70,7 +70,7 @@ const PrescriptionPaper = ({
                     Prescribed By
                   </span>
                   <br />
-                  {state.detail.patient.professional}
+                  {state.detail.professional}
                 </Col>
 
                 <Col>
@@ -144,6 +144,18 @@ const PrescriptionPaper = ({
                   {
                     title: "Size",
                     field: "size",
+                  },
+                  {
+                    title: "Read by",
+                    field: "readby",
+                  },
+                  {
+                    title: "Read Date",
+                    render: (patient) => {
+                      return patient.readDate == null || patient.readDate === ""
+                        ? ""
+                        : moment(patient.readDate).format("MM/DD/YYYY h:mma");
+                    },
                   },
                 ]}
                 data={papers}
