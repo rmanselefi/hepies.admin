@@ -27,7 +27,7 @@ const Login = ({ login, history }) => {
   const { username, password } = formData;
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmit = async (e) => {   
+  const onSubmit = async (e) => {
     e.preventDefault();
     const res = await login(username, password, history);
     if (res === null) {
@@ -38,10 +38,10 @@ const Login = ({ login, history }) => {
       );
     }
   };
-  if (localStorage.getItem('token')) {
-    return <Redirect to='/users' />
-}
-  
+  // if (localStorage.getItem('token')) {
+  //   return <Redirect to='/users' />
+  // }
+
   return (
     <>
       <Col lg="5" md="7">

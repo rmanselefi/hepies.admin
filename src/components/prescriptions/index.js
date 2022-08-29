@@ -106,6 +106,14 @@ const Prescriptions = ({
                         .includes(term.toLowerCase()),
                   },
                   {
+                    title: "Read By",
+                    field: "readBy",
+                  },
+                  {
+                    title: "Read Date",
+                    field: "readDate",
+                  },
+                  {
                     title: "Dx",
                     field: "diagnosis",
                   },
@@ -116,9 +124,7 @@ const Prescriptions = ({
                   {
                     title: "Status",
                     field: "status",
-                  },
-                  
-
+                  },  
                   {
                     title: "Resend",
                     render: (patient) => {

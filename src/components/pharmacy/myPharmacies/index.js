@@ -54,7 +54,7 @@ const MyPharmacies = ({
                   {
                     title: "Pharmacy/ist Name",
                     render: (data) => {
-                      return `${data.profession.name} ${data.profession.fathername}`;
+                      return `${data.profession === null ? '' : data.profession.name} ${data.profession === null ? '' : data.profession.fathername}`;
                     },
                   },
                   { title: "Drug Name", field: "drug_name" },

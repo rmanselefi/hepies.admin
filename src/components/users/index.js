@@ -36,7 +36,7 @@ const Users = ({
 }) => {
   useEffect(() => {
     getUsers();
-  }, [getUsers]);
+  });
 
   const name = user != null ? user?.role.name : null;
 
