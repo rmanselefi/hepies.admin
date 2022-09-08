@@ -107,7 +107,7 @@ const Prescriptions = ({
                   },
                   {
                     title: "Read By",
-                    field: "readBy",
+                    field: "readby",
                   },
                   {
                     title: "Read Date",
