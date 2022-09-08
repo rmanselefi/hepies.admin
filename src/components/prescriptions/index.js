@@ -56,7 +56,7 @@ const Prescriptions = ({
                   pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
                   paging: true,
                   actionsColumnIndex: -1,
-                  maxBodyHeight: "350px",
+                  maxBodyHeight: "500px",
                   cellStyle: {
                     fontSize: "13px",
                   },
@@ -98,7 +98,7 @@ const Prescriptions = ({
                   {
                     title: "Sent Date",
                     render: (patient) => {
-                      return moment(patient.createdAt).format("MM/DD/YYYY");
+                      return moment(patient.createdAt).format("MM/DD/YYYY h:mma");
                     },
                     customFilterAndSearch: (term, patient) =>
                       `${patient.professional}`
@@ -111,7 +111,9 @@ const Prescriptions = ({
                   },
                   {
                     title: "Read Date",
-                    field: "readDate",
+                    render: (patient) => {
+                      return patient.readDate === "" || patient.readDate == null ? '' : moment(patient.readDate).format("MM/DD/YYYY h:mma");
+                    },
                   },
                   {
                     title: "Dx",
@@ -124,7 +126,7 @@ const Prescriptions = ({
                   {
                     title: "Status",
                     field: "status",
-                  },  
+                  },
                   {
                     title: "Resend",
                     render: (patient) => {
