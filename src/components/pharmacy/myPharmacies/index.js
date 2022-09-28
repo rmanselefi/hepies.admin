@@ -24,7 +24,7 @@ const MyPharmacies = ({
   const searchResult =
     pharmacies &&
     pharmacies?.filter((pharma) => {
-      return pharma.drug_name?.includes(name);
+      return pharma.drug_name?.toLowerCase().includes(name.toLowerCase());
     });
   console.log(searchResult);
 
@@ -38,15 +38,17 @@ const MyPharmacies = ({
                 icons={icons}
                 options={{
                   filtering: true,
-                  pageSize: 50,
+                  pageSize: 10,
                   padding: "dense",
                   pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
                   paging: true,
                   actionsColumnIndex: -1,
-                  maxBodyHeight: "650px",
+                  minBodyHeight: "400px",
+                  maxBodyHeight:"400px",
                   cellStyle: {
                     fontSize: "13px",
                   },
+                  showEmptyDataSourceMessage: true
                 }}
                 isLoading={false}
                 columns={[
